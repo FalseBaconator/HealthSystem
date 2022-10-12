@@ -80,7 +80,7 @@ namespace HealthSystem
                 status = "Doing pretty poorly";
             }else if(health <= 75)
             {
-                status = "You can probably walk that off right?";
+                status = "You can probably walk that off, right?";
             }else if(health < 100)
             {
                 status = "Doing alright";
