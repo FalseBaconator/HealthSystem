@@ -62,7 +62,7 @@ namespace HealthSystem
 
             Console.Clear();
             Console.WriteLine();
-            Console.WriteLine("RESET");
+            Console.WriteLine("A RESET OCCURRED");
             Console.WriteLine();
         }
 
