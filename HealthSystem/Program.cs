@@ -24,6 +24,23 @@ namespace HealthSystem
         static int defaultXP = 0;
         static string status;
 
+        static int weapon;
+        static string weaponName;
+        static int ammo;
+        static int maxAmmo;
+        static string weaponOneName = "Revolver";
+        static int weaponOneMaxAmmo = 6;
+        static string weaponTwoName = "ShotGun";
+        static int weaponTwoMaxAmmo = 2;
+        static string weaponThreeName = "Laser Rifle";
+        static int weaponThreeMaxAmmo = 10;
+        static int defaultWeapon = 0;
+        static string defaultWeaponName = weaponOneName;
+        static int defaultMaxAmmo = weaponOneMaxAmmo;
+        static int defaultAmmo = defaultMaxAmmo;
+
+
+
         static void Main(string[] args)
         {
             UnitTest();
@@ -36,6 +53,10 @@ namespace HealthSystem
             lives = defaultLives;
             lvl = defaultLvl;
             xp = defaultXP;
+            weapon = defaultWeapon;
+            weaponName = defaultWeaponName;
+            ammo = defaultAmmo;
+            maxAmmo = defaultMaxAmmo;
 
             DetermineStatus();
 
@@ -84,6 +105,8 @@ namespace HealthSystem
             Console.WriteLine("Lives: " + lives);
             Console.WriteLine("Level: " + lvl);
             Console.WriteLine("XP: " + xp);
+            Console.WriteLine("Weapon: " + weaponName);
+            Console.WriteLine("Ammo: " + ammo.ToString());
             Console.WriteLine("-----------------------");
             Console.WriteLine();
             Console.ReadKey(true);
@@ -106,6 +129,7 @@ namespace HealthSystem
                     if (lives <= 0)
                     {
                         GameOver();
+                        return;
                     }
                     else
                     {
@@ -124,6 +148,7 @@ namespace HealthSystem
         static void GameOver()
         {
             Console.WriteLine("GAME OVER!");
+            status = "Permanently Dead";
         }
 
         static void Heal(int toHeal)
@@ -147,6 +172,20 @@ namespace HealthSystem
             }
         }
 
+        static void OneUp(int oneUps)
+        {
+            health = maxHealth;
+            shield = maxShield;
+            lives += oneUps;
+            DetermineStatus();
+            Console.WriteLine("Player gained " + oneUps.ToString() + " lives");
+            if (lives >= maxLives)
+            {
+                Console.WriteLine("Player is at max lives");
+                lives = maxLives;
+            }
+        }
+
         static void GainXP(int toGain)
         {
             Console.WriteLine("Player gained " + toGain + " XP");
@@ -164,6 +203,46 @@ namespace HealthSystem
                     Console.WriteLine("Already at max level");
                 }
             }
+        }
+
+        static void SwitchWeapon(int weap)
+        {
+            if(weapon == weap)
+            {
+                Console.WriteLine("Player took the ammo from the new " + weaponName);
+                ammo = maxAmmo;
+            }
+            else
+            {
+                switch (weap)
+                {
+                    case 0:
+                        weapon = weap;
+                        weaponName = weaponOneName;
+                        maxAmmo = weaponOneMaxAmmo;
+                        ammo = maxAmmo;
+                        Console.WriteLine("Player picked up a " + weaponName);
+                        break;
+                    case 1:
+                        weapon = weap;
+                        weaponName = weaponTwoName;
+                        maxAmmo = weaponTwoMaxAmmo;
+                        ammo = maxAmmo;
+                        Console.WriteLine("Player picked up a " + weaponName);
+                        break;
+                    case 2:
+                        weapon = weap;
+                        weaponName = weaponThreeName;
+                        maxAmmo = weaponThreeMaxAmmo;
+                        ammo = maxAmmo;
+                        Console.WriteLine("Player picked up a " + weaponName);
+                        break;
+                    default:
+                        Console.WriteLine("Error: Not a valid weapon");
+                        break;
+                }
+            }
+           
         }
 
         static void UnitTest()
@@ -216,6 +295,44 @@ namespace HealthSystem
             RegenShield(75);
             ShowHud();
 
+            //take enough damage to die
+            Reset();
+            ShowHud();
+            TakeDMG(250);
+            ShowHud();
+
+            //Die 3 times
+            Reset();
+            ShowHud();
+            Console.WriteLine("DEBUG: Player is going to die enough times to get a game over");
+            TakeDMG(200);
+            ShowHud();
+            TakeDMG(200);
+            ShowHud();
+            TakeDMG(200);
+            ShowHud();
+
+            //take damage and then get a life
+            Reset();
+            ShowHud();
+            Console.WriteLine("DEBUG: Player is going to be damaged and then gain a life, healing them in the proccess");
+            TakeDMG(150);
+            ShowHud();
+            OneUp(1);
+            ShowHud();
+
+            //gain more lives
+            Reset();
+            ShowHud();
+            OneUp(3);
+            ShowHud();
+
+            //gain more than max lives
+            Reset();
+            ShowHud();
+            OneUp(105);
+            ShowHud();
+
             //Gain XP
             Reset();
             ShowHud();
@@ -242,7 +359,39 @@ namespace HealthSystem
             GainXP(9950);
             ShowHud();
 
+            //switch to Revolver when already has revolver
+            Reset();
+            ShowHud();
+            SwitchWeapon(0);
+            ShowHud();
 
+            //switch to shotgun
+            Reset();
+            ShowHud();
+            SwitchWeapon(1);
+            ShowHud();
+
+            //switch to laser rifle
+            Reset();
+            ShowHud();
+            SwitchWeapon(2);
+            ShowHud();
+
+            //switch to nonexistant weapon
+            Reset();
+            ShowHud();
+            Console.WriteLine("DEBUG: Attempting to switch to a nonexistant weapon");
+            SwitchWeapon(3);
+            ShowHud();
+
+            //switch to shotgun and back to revolver
+            Reset();
+            ShowHud();
+            Console.WriteLine("DEBUG: switching to shotgun and back to revolver");
+            SwitchWeapon(1);
+            ShowHud();
+            SwitchWeapon(0);
+            ShowHud();
 
         }
 
