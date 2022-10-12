@@ -76,6 +76,7 @@ namespace HealthSystem
             Console.WriteLine("Lives: " + lives);
             Console.WriteLine("-----------------------");
             Console.WriteLine();
+            Console.ReadKey(true);
 
         }
 
