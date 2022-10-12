@@ -116,33 +116,42 @@ namespace HealthSystem
         static void TakeDMG(int DMG)
         {
             Console.WriteLine("Player is taking " + DMG.ToString() + " damage");
-            if(shield < DMG)
+            if(DMG >= 0)
             {
-                DMG -= shield;
-                shield = 0;
-                health -= DMG;
-                if (health <= 0)
+                if(shield < DMG)
                 {
-                    health = 0;
-                    Console.WriteLine("Player has died");
-                    lives -= 1;
-                    if (lives <= 0)
+                    DMG -= shield;
+                    shield = 0;
+                    health -= DMG;
+                    if (health <= 0)
                     {
-                        GameOver();
-                        return;
-                    }
-                    else
-                    {
-                        health = maxHealth;
-                        shield = maxShield;
+                        health = 0;
+                        Console.WriteLine("Player has died");
+                        lives -= 1;
+                        if (lives <= 0)
+                        {
+                            GameOver();
+                            return;
+                        }
+                        else
+                        {
+                            health = maxHealth;
+                            shield = maxShield;
+                            Console.WriteLine("Player has respawned");
+                        }
                     }
                 }
+                else
+                {
+                    shield -= DMG;
+                }
+                DetermineStatus();
             }
             else
             {
-                shield -= DMG;
+                Console.WriteLine("ERROR: Can't deal negative damage");
             }
-            DetermineStatus();
+            
         }
 
         static void GameOver()
@@ -154,54 +163,83 @@ namespace HealthSystem
         static void Heal(int toHeal)
         {
             Console.WriteLine("Player gained " + toHeal.ToString() + " health");
-            health += toHeal;
-            if(health > maxHealth)
+            if (toHeal >= 0)
             {
-                health = maxHealth;
+                health += toHeal;
+                if(health > maxHealth)
+                {
+                    health = maxHealth;
+                }
+                DetermineStatus();
             }
-            DetermineStatus();
+            else
+            {
+                Console.WriteLine("ERROR: Can't heal negative health");
+            }
+            
         }
 
         static void RegenShield(int toRegen)
         {
             Console.WriteLine("Player gained " + toRegen.ToString() + " shield");
-            shield += toRegen;
-            if(shield > maxShield)
+            if(toRegen >= 0)
             {
-                shield = maxShield;
+                shield += toRegen;
+                if(shield > maxShield)
+                {
+                    shield = maxShield;
+                }
+            }
+            else
+            {
+                Console.WriteLine("ERROR: Can't regen negative shield");
             }
         }
 
         static void OneUp(int oneUps)
         {
-            health = maxHealth;
-            shield = maxShield;
-            lives += oneUps;
-            DetermineStatus();
             Console.WriteLine("Player gained " + oneUps.ToString() + " lives");
-            if (lives >= maxLives)
+            if(oneUps >= 0)
             {
-                Console.WriteLine("Player is at max lives");
-                lives = maxLives;
+                health = maxHealth;
+                shield = maxShield;
+                lives += oneUps;
+                DetermineStatus();
+                if (lives >= maxLives)
+                {
+                    Console.WriteLine("Player is at max lives");
+                    lives = maxLives;
+                }
+            }
+            else
+            {
+                Console.WriteLine("ERROR: Can't give negative lives");
             }
         }
 
         static void GainXP(int toGain)
         {
             Console.WriteLine("Player gained " + toGain + " XP");
-            xp += toGain;
-            while(xp >= xpToLvlUp)
+            if(toGain >= 0)
             {
-                xp -= xpToLvlUp;
-                if(lvl < maxLvl)
+                xp += toGain;
+                while(xp >= xpToLvlUp)
                 {
-                    Console.WriteLine("LEVEL UP!");
-                    lvl += 1;
+                    xp -= xpToLvlUp;
+                    if(lvl < maxLvl)
+                    {
+                        Console.WriteLine("LEVEL UP!");
+                        lvl += 1;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Already at max level");
+                    }
                 }
-                else
-                {
-                    Console.WriteLine("Already at max level");
-                }
+            }
+            else
+            {
+                Console.WriteLine("ERROR: Can't give negative XP");
             }
         }
 
@@ -259,6 +297,12 @@ namespace HealthSystem
             TakeDMG(150);
             ShowHud();
 
+            //take negative dmg
+            Reset();
+            ShowHud();
+            TakeDMG(-50);
+            ShowHud();
+
             //take damage to show healing
             Reset();
             ShowHud();
@@ -277,6 +321,12 @@ namespace HealthSystem
             Heal(150);
             ShowHud();
 
+            //heal negative
+            Reset();
+            ShowHud();
+            Heal(-50);
+            ShowHud();
+
             //take damage and then regen shield
             Reset();
             ShowHud();
@@ -293,6 +343,12 @@ namespace HealthSystem
             TakeDMG(50);
             ShowHud();
             RegenShield(75);
+            ShowHud();
+
+            //Regen negative shield
+            Reset();
+            ShowHud();
+            RegenShield(-50);
             ShowHud();
 
             //take enough damage to die
@@ -333,6 +389,12 @@ namespace HealthSystem
             OneUp(105);
             ShowHud();
 
+            //gain negative lives
+            Reset();
+            ShowHud();
+            OneUp(-1);
+            ShowHud();
+
             //Gain XP
             Reset();
             ShowHud();
@@ -359,6 +421,12 @@ namespace HealthSystem
             GainXP(9950);
             ShowHud();
 
+            //Gain negative XP
+            Reset();
+            ShowHud();
+            GainXP(-50);
+            ShowHud();
+
             //switch to Revolver when already has revolver
             Reset();
             ShowHud();
@@ -377,13 +445,6 @@ namespace HealthSystem
             SwitchWeapon(2);
             ShowHud();
 
-            //switch to nonexistant weapon
-            Reset();
-            ShowHud();
-            Console.WriteLine("DEBUG: Attempting to switch to a nonexistant weapon");
-            SwitchWeapon(3);
-            ShowHud();
-
             //switch to shotgun and back to revolver
             Reset();
             ShowHud();
@@ -392,6 +453,14 @@ namespace HealthSystem
             ShowHud();
             SwitchWeapon(0);
             ShowHud();
+
+            //switch to nonexistant weapon
+            Reset();
+            ShowHud();
+            Console.WriteLine("DEBUG: Attempting to switch to a nonexistant weapon");
+            SwitchWeapon(3);
+            ShowHud();
+
 
         }
 
