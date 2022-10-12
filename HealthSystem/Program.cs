@@ -115,5 +115,25 @@ namespace HealthSystem
             Console.WriteLine("GAME OVER!");
         }
 
+        static void Heal(int toHeal)
+        {
+            health += toHeal;
+            if(health > maxHealth)
+            {
+                health = maxHealth;
+            }
+        }
+
+        static void RegenShield(int toRegen)
+        {
+            shield += toRegen;
+            if(shield > maxShield)
+            {
+                shield = maxShield;
+            }
+        }
+
+
+
     }
 }
