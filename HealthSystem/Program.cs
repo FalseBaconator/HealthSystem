@@ -80,6 +80,40 @@ namespace HealthSystem
 
         }
 
+        static void TakeDMG(int DMG)
+        {
+            Console.WriteLine("Player is taking " + DMG.ToString() + " damage");
+            if(shield < DMG)
+            {
+                DMG -= shield;
+                shield = 0;
+                health -= DMG;
+                if (health <= 0)
+                {
+                    health = 0;
+                    Console.WriteLine("Player has died");
+                    lives -= 1;
+                    if (lives <= 0)
+                    {
+                        GameOver();
+                    }
+                    else
+                    {
+                        health = maxHealth;
+                        shield = maxShield;
+                    }
+                }
+            }
+            else
+            {
+                shield -= DMG;
+            }
+        }
+
+        static void GameOver()
+        {
+            Console.WriteLine("GAME OVER!");
+        }
 
     }
 }
