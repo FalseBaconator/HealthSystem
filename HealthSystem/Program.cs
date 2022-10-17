@@ -283,6 +283,34 @@ namespace HealthSystem
            
         }
 
+        static void Fire(int times)
+        {
+            if (times >= 0)
+            {
+                while(times > 0 && ammo > 0)
+                {
+                    times--;
+                    ammo--;
+                    Console.WriteLine("Bang!");
+                }
+                while (times > 0 && ammo <= 0)
+                {
+                    ammo = 0;
+                    Console.WriteLine("Click");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Error: can't fire negative times");
+            }
+        }
+
+        static void Reload()
+        {
+            ammo = maxAmmo;
+            Console.WriteLine("Player reloaded");
+        }
+
         static void UnitTest()
         {
             //take 50 dmg
