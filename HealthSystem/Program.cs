@@ -296,6 +296,7 @@ namespace HealthSystem
                 }
                 while (times > 0 && ammo <= 0)
                 {
+                    times--;
                     ammo = 0;
                     Console.WriteLine("Click");
                 }
