@@ -279,6 +279,7 @@ namespace HealthSystem
 
         static void GameOver()
         {
+            SetDifs();
             Console.WriteLine("GAME OVER!");
             status = "Permanently Dead";
         }
