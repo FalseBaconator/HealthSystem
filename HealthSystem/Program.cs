@@ -114,6 +114,7 @@ namespace HealthSystem
             Console.WriteLine();
             Console.WriteLine("-----------------------");
             Console.Write("Shield: " + shield.ToString());
+
             if(difShield > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -168,14 +169,11 @@ namespace HealthSystem
                 Console.WriteLine();
             }
 
-
-
-
             Console.Write("Level: " + lvl.ToString());
             if (difLvl > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(" +" + diflvl.ToString());
+                Console.WriteLine(" +" + difLvl.ToString());
                 Console.ResetColor();
             }
             else if (difLvl < 0)
@@ -188,9 +186,6 @@ namespace HealthSystem
             {
                 Console.WriteLine();
             }
-
-
-
 
             Console.Write("XP: " + xp.ToString());
             if (difXP > 0)
@@ -210,13 +205,7 @@ namespace HealthSystem
                 Console.WriteLine();
             }
 
-
-
-
             Console.WriteLine("Weapon: " + weaponName);
-
-
-
 
             Console.Write("Ammo: " + ammo.ToString());
             if (difAmmo > 0)
