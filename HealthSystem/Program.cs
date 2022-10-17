@@ -123,7 +123,7 @@ namespace HealthSystem
             }else if(difShield < 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(difShield.ToString());
+                Console.WriteLine(" " + difShield.ToString());
                 Console.ResetColor();
             }
             else
@@ -141,7 +141,7 @@ namespace HealthSystem
             else if (difHealth < 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(difHealth.ToString());
+                Console.WriteLine(" " + difHealth.ToString());
                 Console.ResetColor();
             }
             else
@@ -161,7 +161,7 @@ namespace HealthSystem
             else if (difLives < 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(difLives.ToString());
+                Console.WriteLine(" " + difLives.ToString());
                 Console.ResetColor();
             }
             else
@@ -179,7 +179,7 @@ namespace HealthSystem
             else if (difLvl < 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(difLvl.ToString());
+                Console.WriteLine(" " + difLvl.ToString());
                 Console.ResetColor();
             }
             else
@@ -197,7 +197,7 @@ namespace HealthSystem
             else if (difXP < 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(difXP.ToString());
+                Console.WriteLine(" " + difXP.ToString());
                 Console.ResetColor();
             }
             else
@@ -217,7 +217,7 @@ namespace HealthSystem
             else if (difAmmo < 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(difAmmo.ToString());
+                Console.WriteLine(" " + difAmmo.ToString());
                 Console.ResetColor();
             }
             else
