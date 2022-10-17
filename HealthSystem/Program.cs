@@ -10,16 +10,26 @@ namespace HealthSystem
     {
 
         static int health;
+        static int prevHealth;
+        static int difHealth;
         static int maxHealth = 100;
         static int shield;
+        static int prevShield;
+        static int difShield;
         static int maxShield = 100;
         static int lives;
+        static int prevLives;
+        static int difLives;
         static int maxLives = 99;
         static int defaultLives = 3;
         static int lvl;
+        static int prevLvl;
+        static int difLvl;
         static int maxLvl = 99;
         static int defaultLvl = 1;
         static int xp;
+        static int prevXP;
+        static int difXP;
         static int xpToLvlUp = 100;
         static int defaultXP = 0;
         static string status;
@@ -27,6 +37,8 @@ namespace HealthSystem
         static int weapon;
         static string weaponName;
         static int ammo;
+        static int prevAmmo;
+        static int difAmmo;
         static int maxAmmo;
         static string weaponOneName = "Revolver";
         static int weaponOneMaxAmmo = 6;
@@ -59,6 +71,8 @@ namespace HealthSystem
             maxAmmo = defaultMaxAmmo;
 
             DetermineStatus();
+            SetPrevs();
+            SetDifs();
 
             Console.Clear();
             Console.WriteLine();
@@ -99,7 +113,7 @@ namespace HealthSystem
         {
             Console.WriteLine();
             Console.WriteLine("-----------------------");
-            Console.WriteLine("Shield: " + shield);
+            Console.Write("Shield: " + shield);
             Console.WriteLine("Health: " + health);
             Console.WriteLine("Status: " + status);
             Console.WriteLine("Lives: " + lives);
@@ -115,6 +129,7 @@ namespace HealthSystem
 
         static void TakeDMG(int DMG)
         {
+            SetPrevs();
             Console.WriteLine("Player is taking " + DMG.ToString() + " damage");
             if(DMG >= 0)
             {
@@ -146,12 +161,13 @@ namespace HealthSystem
                     shield -= DMG;
                 }
                 DetermineStatus();
+
             }
             else
             {
                 Console.WriteLine("ERROR: Can't deal negative damage");
             }
-            
+            SetDifs();
         }
 
         static void GameOver()
@@ -162,6 +178,7 @@ namespace HealthSystem
 
         static void Heal(int toHeal)
         {
+            SetPrevs();
             Console.WriteLine("Player gained " + toHeal.ToString() + " health");
             if (toHeal >= 0)
             {
@@ -176,11 +193,12 @@ namespace HealthSystem
             {
                 Console.WriteLine("ERROR: Can't heal negative health");
             }
-            
+            SetDifs();
         }
 
         static void RegenShield(int toRegen)
         {
+            SetPrevs();
             Console.WriteLine("Player gained " + toRegen.ToString() + " shield");
             if(toRegen >= 0)
             {
@@ -194,10 +212,12 @@ namespace HealthSystem
             {
                 Console.WriteLine("ERROR: Can't regen negative shield");
             }
+            SetDifs();
         }
 
         static void OneUp(int oneUps)
         {
+            SetPrevs();
             Console.WriteLine("Player gained " + oneUps.ToString() + " lives");
             if(oneUps >= 0)
             {
@@ -215,10 +235,12 @@ namespace HealthSystem
             {
                 Console.WriteLine("ERROR: Can't give negative lives");
             }
+            SetDifs();
         }
 
         static void GainXP(int toGain)
         {
+            SetPrevs();
             Console.WriteLine("Player gained " + toGain + " XP");
             if(toGain >= 0)
             {
@@ -241,10 +263,12 @@ namespace HealthSystem
             {
                 Console.WriteLine("ERROR: Can't give negative XP");
             }
+            SetDifs();
         }
 
         static void SwitchWeapon(int weap)
         {
+            SetPrevs();
             if(weapon == weap)
             {
                 Console.WriteLine("Player took the ammo from the new " + weaponName);
@@ -280,11 +304,12 @@ namespace HealthSystem
                         break;
                 }
             }
-           
+            SetDifs();          
         }
 
         static void Fire(int times)
         {
+            SetPrevs();
             Console.WriteLine("firing " + times.ToString() + " times");
             if (times >= 0)
             {
@@ -305,12 +330,35 @@ namespace HealthSystem
             {
                 Console.WriteLine("Error: can't fire negative times");
             }
+            SetDifs();
         }
 
         static void Reload()
         {
+            SetPrevs();
             ammo = maxAmmo;
             Console.WriteLine("Player reloaded");
+            SetDifs();
+        }
+
+        static void SetPrevs()
+        {
+            prevShield = shield;
+            prevHealth = health;
+            prevLives = lives;
+            prevLvl = lvl;
+            prevXP = xp;
+            prevAmmo = ammo;
+        }
+
+        static void SetDifs()
+        {
+            difShield = shield - prevShield;
+            difHealth = health - prevHealth;
+            difLives = lives - prevLvl;
+            difLvl = lvl - prevLvl;
+            difXP = xp - prevXP;
+            difAmmo = ammo - prevAmmo;
         }
 
         static void UnitTest()
