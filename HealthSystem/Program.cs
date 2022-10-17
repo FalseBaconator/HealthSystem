@@ -72,7 +72,6 @@ namespace HealthSystem
 
             DetermineStatus();
             SetPrevs();
-            SetPrevs();
             SetDifs();
 
             Console.Clear();
@@ -463,7 +462,7 @@ namespace HealthSystem
         {
             difShield = shield - prevShield;
             difHealth = health - prevHealth;
-            difLives = lives - prevLvl;
+            difLives = lives - prevLives;
             difLvl = lvl - prevLvl;
             difXP = xp - prevXP;
             difAmmo = ammo - prevAmmo;
