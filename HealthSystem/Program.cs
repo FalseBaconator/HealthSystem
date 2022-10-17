@@ -285,6 +285,7 @@ namespace HealthSystem
 
         static void Fire(int times)
         {
+            Console.WriteLine("firing " + times.ToString() + " times");
             if (times >= 0)
             {
                 while(times > 0 && ammo > 0)
@@ -487,6 +488,72 @@ namespace HealthSystem
             ShowHud();
             Console.WriteLine("DEBUG: Attempting to switch to a nonexistant weapon");
             SwitchWeapon(3);
+            ShowHud();
+
+            //fire with revolver
+            Reset();
+            ShowHud();
+            Fire(1);
+            ShowHud();
+
+            //fire 10 times with revolver
+            Reset();
+            ShowHud();
+            Fire(10);
+            ShowHud();
+
+            //fire negative times with revolver
+            Reset();
+            ShowHud();
+            Fire(-10);
+            ShowHud();
+
+            //fire with ShotGun
+            Reset();
+            ShowHud();
+            SwitchWeapon(1);
+            ShowHud();
+            Fire(1);
+            ShowHud();
+
+            //fire 5 times with shotgun
+            Reset();
+            ShowHud();
+            SwitchWeapon(1);
+            ShowHud();
+            Fire(5);
+            ShowHud();
+
+            //fire negative times with shotgun
+            Reset();
+            ShowHud();
+            SwitchWeapon(1);
+            ShowHud();
+            Fire(-5);
+            ShowHud();
+
+            //fire with laser rifle
+            Reset();
+            ShowHud();
+            SwitchWeapon(2);
+            ShowHud();
+            Fire(1);
+            ShowHud();
+
+            //fire 15 times with laser
+            Reset();
+            ShowHud();
+            SwitchWeapon(2);
+            ShowHud();
+            Fire(15);
+            ShowHud();
+
+            //fire negative times with laser
+            Reset();
+            ShowHud();
+            SwitchWeapon(2);
+            ShowHud();
+            Fire(-1);
             ShowHud();
 
 
