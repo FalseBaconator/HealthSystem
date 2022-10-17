@@ -113,14 +113,132 @@ namespace HealthSystem
         {
             Console.WriteLine();
             Console.WriteLine("-----------------------");
-            Console.Write("Shield: " + shield);
-            Console.WriteLine("Health: " + health);
+            Console.Write("Shield: " + shield.ToString());
+            if(difShield > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(" +" + difShield.ToString());
+                Console.ResetColor();
+            }else if(difShield < 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" -" + difShield.ToString());
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.WriteLine();
+            }
+
+            Console.Write("Health: " + health.ToString());
+            if (difHealth > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(" +" + difHealth.ToString());
+                Console.ResetColor();
+            }
+            else if (difHealth < 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" -" + difHealth.ToString());
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.WriteLine();
+            }
+
             Console.WriteLine("Status: " + status);
-            Console.WriteLine("Lives: " + lives);
-            Console.WriteLine("Level: " + lvl);
-            Console.WriteLine("XP: " + xp);
+
+            Console.Write("Lives: " + lives.ToString());
+            if (difLives > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(" +" + difLives.ToString());
+                Console.ResetColor();
+            }
+            else if (difLives < 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" -" + difLives.ToString());
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.WriteLine();
+            }
+
+
+
+
+            Console.Write("Level: " + lvl.ToString());
+            if (difLvl > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(" +" + diflvl.ToString());
+                Console.ResetColor();
+            }
+            else if (difLvl < 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" -" + difLvl.ToString());
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.WriteLine();
+            }
+
+
+
+
+            Console.Write("XP: " + xp.ToString());
+            if (difXP > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(" +" + difXP.ToString());
+                Console.ResetColor();
+            }
+            else if (difXP < 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" -" + difXP.ToString());
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.WriteLine();
+            }
+
+
+
+
             Console.WriteLine("Weapon: " + weaponName);
-            Console.WriteLine("Ammo: " + ammo.ToString());
+
+
+
+
+            Console.Write("Ammo: " + ammo.ToString());
+            if (difAmmo > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(" +" + difAmmo.ToString());
+                Console.ResetColor();
+            }
+            else if (difAmmo < 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" -" + difAmmo.ToString());
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.WriteLine();
+            }
+
+
+
+
             Console.WriteLine("-----------------------");
             Console.WriteLine();
             Console.ReadKey(true);
