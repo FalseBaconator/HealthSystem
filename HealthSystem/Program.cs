@@ -557,6 +557,62 @@ namespace HealthSystem
             Fire(-1);
             ShowHud();
 
+            //reload with revolver
+            Reset();
+            ShowHud();
+            Fire(1);
+            ShowHud();
+            Reload();
+            ShowHud();
+
+            //reload more than one bullet for revolver
+            Reset();
+            ShowHud();
+            Fire(4);
+            ShowHud();
+            Reload();
+            ShowHud();
+
+            //reload shotgun
+            Reset();
+            ShowHud();
+            SwitchWeapon(1);
+            ShowHud();
+            Fire(1);
+            ShowHud();
+            Reload();
+            ShowHud();
+
+            //reload more shotgun
+            Reset();
+            ShowHud();
+            SwitchWeapon(1);
+            ShowHud();
+            Fire(4);
+            ShowHud();
+            Reload();
+            ShowHud();
+
+            //Reload rifle
+            Reset();
+            ShowHud();
+            SwitchWeapon(2);
+            ShowHud();
+            Fire(1);
+            ShowHud();
+            Reload();
+            ShowHud();
+
+            //Reload more rifle
+            Reset();
+            ShowHud();
+            SwitchWeapon(2);
+            ShowHud();
+            Fire(7);
+            ShowHud();
+            Reload();
+            ShowHud();
+
 
         }
 
