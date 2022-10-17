@@ -8,44 +8,64 @@ namespace HealthSystem
 {
     internal class Program
     {
-
+        //HP
         static int health;
-        static int prevHealth;
-        static int difHealth;
+        static int prevHealth; //Previous health
+        static int difHealth; //difference in health
         static int maxHealth = 100;
+
+        //shield
         static int shield;
         static int prevShield;
         static int difShield;
         static int maxShield = 100;
+
+        //lives
         static int lives;
         static int prevLives;
         static int difLives;
         static int maxLives = 99;
         static int defaultLives = 3;
+
+        //levels
         static int lvl;
         static int prevLvl;
         static int difLvl;
         static int maxLvl = 99;
         static int defaultLvl = 1;
+
+        //Experience
         static int xp;
         static int prevXP;
         static int difXP;
         static int xpToLvlUp = 100;
         static int defaultXP = 0;
+
+        //written status
         static string status;
 
+        //weaponry
+        //current weapon and ammo
         static int weapon;
         static string weaponName;
         static int ammo;
         static int prevAmmo;
         static int difAmmo;
         static int maxAmmo;
+
+        //revolver stats
         static string weaponOneName = "Revolver";
         static int weaponOneMaxAmmo = 6;
+
+        //shotgun stats
         static string weaponTwoName = "ShotGun";
         static int weaponTwoMaxAmmo = 2;
+
+        //laser stats
         static string weaponThreeName = "Laser Rifle";
         static int weaponThreeMaxAmmo = 10;
+
+        //default is revolver
         static int defaultWeapon = 0;
         static string defaultWeaponName = weaponOneName;
         static int defaultMaxAmmo = weaponOneMaxAmmo;
@@ -60,6 +80,7 @@ namespace HealthSystem
 
         static void Reset()
         {
+            //set all stats to default
             health = maxHealth;
             shield = maxShield;
             lives = defaultLives;
@@ -69,8 +90,9 @@ namespace HealthSystem
             weaponName = defaultWeaponName;
             ammo = defaultAmmo;
             maxAmmo = defaultMaxAmmo;
-
             DetermineStatus();
+
+            //make sure that no difference is displayed in ShowHud;
             SetPrevs();
             SetDifs();
 
@@ -82,7 +104,7 @@ namespace HealthSystem
 
         static void DetermineStatus()
         {
-
+            //changes status method to match health
             if(health >= 0 && health <= 10)
             {
                 status = "Go to a hospital";
@@ -113,114 +135,122 @@ namespace HealthSystem
         {
             Console.WriteLine();
             Console.WriteLine("-----------------------");
-            Console.Write("Shield: " + shield.ToString());
 
-            if(difShield > 0)
+            //shield
+            Console.Write("Shield: " + shield.ToString());
+            if(difShield > 0) //shield gained
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(" +" + difShield.ToString());
                 Console.ResetColor();
-            }else if(difShield < 0)
+            }else if(difShield < 0) //shield lost
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(" " + difShield.ToString());
                 Console.ResetColor();
             }
-            else
+            else //no change
             {
                 Console.WriteLine();
             }
 
+            //health
             Console.Write("Health: " + health.ToString());
-            if (difHealth > 0)
+            if (difHealth > 0) //health gained
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(" +" + difHealth.ToString());
                 Console.ResetColor();
             }
-            else if (difHealth < 0)
+            else if (difHealth < 0) //health lost
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(" " + difHealth.ToString());
                 Console.ResetColor();
             }
-            else
+            else //no change
             {
                 Console.WriteLine();
             }
 
+            //status
             Console.WriteLine("Status: " + status);
 
+            //lives
             Console.Write("Lives: " + lives.ToString());
-            if (difLives > 0)
+            if (difLives > 0) //lives gained
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(" +" + difLives.ToString());
                 Console.ResetColor();
             }
-            else if (difLives < 0)
+            else if (difLives < 0)//lives lost
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(" " + difLives.ToString());
                 Console.ResetColor();
             }
-            else
+            else //no change
             {
                 Console.WriteLine();
             }
 
+            //level
             Console.Write("Level: " + lvl.ToString());
-            if (difLvl > 0)
+            if (difLvl > 0) //lvl gained
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(" +" + difLvl.ToString());
                 Console.ResetColor();
             }
-            else if (difLvl < 0)
+            else if (difLvl < 0) //lvl lost | shoudln't really be possible
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(" " + difLvl.ToString());
                 Console.ResetColor();
             }
-            else
+            else //no change
             {
                 Console.WriteLine();
             }
 
+            //XP
             Console.Write("XP: " + xp.ToString());
-            if (difXP > 0)
+            if (difXP > 0) //xp gained
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(" +" + difXP.ToString());
                 Console.ResetColor();
             }
-            else if (difXP < 0)
+            else if (difXP < 0) //xp lost
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(" " + difXP.ToString());
                 Console.ResetColor();
             }
-            else
+            else //no change
             {
                 Console.WriteLine();
             }
 
+            //weapon name
             Console.WriteLine("Weapon: " + weaponName);
 
+            //ammo
             Console.Write("Ammo: " + ammo.ToString());
-            if (difAmmo > 0)
+            if (difAmmo > 0) //ammo gained
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(" +" + difAmmo.ToString());
                 Console.ResetColor();
             }
-            else if (difAmmo < 0)
+            else if (difAmmo < 0) // ammo lost
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(" " + difAmmo.ToString());
                 Console.ResetColor();
             }
-            else
+            else //no change
             {
                 Console.WriteLine();
             }
@@ -236,221 +266,231 @@ namespace HealthSystem
 
         static void TakeDMG(int DMG)
         {
-            SetPrevs();
+            SetPrevs(); //save current stats
             Console.WriteLine("Player is taking " + DMG.ToString() + " damage");
-            if(DMG >= 0)
+            if(DMG >= 0) //error check
             {
-                if(shield < DMG)
+                if(shield < DMG) //if will lose shield, or already lost shield
                 {
-                    DMG -= shield;
-                    shield = 0;
-                    health -= DMG;
-                    if (health <= 0)
-                    {
-                        health = 0;
-                        Console.WriteLine("Player has died");
-                        lives -= 1;
-                        if (lives <= 0)
-                        {
-                            GameOver();
-                            return;
-                        }
-                        else
-                        {
-                            health = maxHealth;
-                            shield = maxShield;
-                            Console.WriteLine("Player has respawned");
-                        }
+                    DMG -= shield;  //shield removes some dmg
+                    shield = 0;     //shield is 0
+                    health -= DMG;  //remaining dmg goes to health
+                    if (health <= 0)                                //
+                    {                                               //
+                        health = 0;                                 //if player dies 
+                        Console.WriteLine("Player has died");       //
+                        lives -= 1;                                 //
+                        if (lives <= 0) //
+                        {               //
+                            GameOver(); //if 0 lives
+                            return;     //
+                        }               //
+                        else                                            //
+                        {                                               //
+                            health = maxHealth;                         //respawn
+                            shield = maxShield;                         //
+                            Console.WriteLine("Player has respawned");  //
+                        }                                               
                     }
                 }
-                else
-                {
-                    shield -= DMG;
-                }
+                else                //
+                {                   //shield takes dmg but isn't 0 yet
+                    shield -= DMG;  //
+                }                   //
+
                 DetermineStatus();
 
             }
-            else
-            {
-                Console.WriteLine("ERROR: Can't deal negative damage");
-            }
-            SetDifs();
+            else                                                        //
+            {                                                           //
+                Console.WriteLine("ERROR: Can't deal negative damage"); //error
+            }                                                           //
+
+            SetDifs();//compare current stats to stats at the start of the method
         }
 
         static void GameOver()
         {
-            SetDifs();
+            SetDifs();//compare stats to stats at the beginning of TakeDMG()
             Console.WriteLine("GAME OVER!");
             status = "Permanently Dead";
         }
 
         static void Heal(int toHeal)
         {
-            SetPrevs();
+            SetPrevs();//save current stats
             Console.WriteLine("Player gained " + toHeal.ToString() + " health");
-            if (toHeal >= 0)
+            if (toHeal >= 0) //error check
             {
-                health += toHeal;
-                if(health > maxHealth)
-                {
-                    health = maxHealth;
-                }
+                health += toHeal;//heal
+                if(health > maxHealth)  //
+                {                       //
+                    health = maxHealth; //range check
+                }                       //
+
                 DetermineStatus();
             }
-            else
-            {
-                Console.WriteLine("ERROR: Can't heal negative health");
-            }
-            SetDifs();
+            else                                                        //
+            {                                                           //
+                Console.WriteLine("ERROR: Can't heal negative health"); //error
+            }                                                           //
+
+            SetDifs(); //compare current stats to stats at beginning of method
         }
 
         static void RegenShield(int toRegen)
         {
-            SetPrevs();
+            SetPrevs();//save current stats
             Console.WriteLine("Player gained " + toRegen.ToString() + " shield");
-            if(toRegen >= 0)
+            if(toRegen >= 0)//error check
             {
-                shield += toRegen;
-                if(shield > maxShield)
-                {
-                    shield = maxShield;
-                }
+                shield += toRegen;//regen
+                if(shield > maxShield)  //
+                {                       //
+                    shield = maxShield; //range check
+                }                       //
             }
-            else
-            {
-                Console.WriteLine("ERROR: Can't regen negative shield");
-            }
-            SetDifs();
+            else                                                            //
+            {                                                               //
+                Console.WriteLine("ERROR: Can't regen negative shield");    //error
+            }                                                               //
+
+            SetDifs(); //compare current stats to stats at beginning of method
         }
 
         static void OneUp(int oneUps)
         {
-            SetPrevs();
+            SetPrevs();//save current stats
             Console.WriteLine("Player gained " + oneUps.ToString() + " lives");
-            if(oneUps >= 0)
+            if(oneUps >= 0)//error check
             {
-                health = maxHealth;
-                shield = maxShield;
-                lives += oneUps;
-                DetermineStatus();
-                if (lives >= maxLives)
-                {
-                    Console.WriteLine("Player is at max lives");
-                    lives = maxLives;
-                }
+                health = maxHealth; //
+                shield = maxShield; //heal and add life
+                lives += oneUps;    //
+                DetermineStatus();  //
+                if (lives >= maxLives)                              //
+                {                                                   //
+                    Console.WriteLine("Player is at max lives");    //range check
+                    lives = maxLives;                               //
+                }                                                   //
             }
-            else
-            {
-                Console.WriteLine("ERROR: Can't give negative lives");
-            }
-            SetDifs();
+            else                                                        //
+            {                                                           //
+                Console.WriteLine("ERROR: Can't give negative lives");  //error
+            }                                                           //
+
+            SetDifs();//compare current stats to stats at beginning of method
         }
 
         static void GainXP(int toGain)
         {
-            SetPrevs();
+            SetPrevs();//save current stats
             Console.WriteLine("Player gained " + toGain + " XP");
-            if(toGain >= 0)
+            if(toGain >= 0)//error check
             {
-                xp += toGain;
-                while(xp >= xpToLvlUp)
-                {
-                    xp -= xpToLvlUp;
-                    if(lvl < maxLvl)
-                    {
-                        Console.WriteLine("LEVEL UP!");
-                        lvl += 1;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Already at max level");
-                    }
-                }
+                xp += toGain;//gain
+                while(xp >= xpToLvlUp)                              //level up loop
+                {                                                   //
+                    xp -= xpToLvlUp;                                //  //
+                    if(lvl < maxLvl)                                //  //  //range check
+                    {                                               //  //level up once
+                        Console.WriteLine("LEVEL UP!");             //  //
+                        lvl += 1;                                   //  //
+                    }                                               //  //
+                    else                                            //      //
+                    {                                               //      //
+                        Console.WriteLine("Already at max level");  //      //range check
+                    }                                               //      //
+                }                                                   //
             }
-            else
-            {
-                Console.WriteLine("ERROR: Can't give negative XP");
-            }
-            SetDifs();
+            else                                                        //
+            {                                                           //
+                Console.WriteLine("ERROR: Can't give negative XP");     //error
+            }                                                           //
+
+            SetDifs();//compare current stats to stats at the start of the method
         }
 
         static void SwitchWeapon(int weap)
         {
-            SetPrevs();
-            if(weapon == weap)
-            {
-                Console.WriteLine("Player took the ammo from the new " + weaponName);
-                ammo = maxAmmo;
-            }
+            SetPrevs();//save current stats
+            if(weapon == weap)                                                          //
+            {                                                                           //
+                Console.WriteLine("Player took the ammo from the new " + weaponName);   //if changing to current weapon
+                ammo = maxAmmo;                                                         //
+            }                                                                           //
             else
             {
-                switch (weap)
-                {
-                    case 0:
-                        weapon = weap;
-                        weaponName = weaponOneName;
-                        maxAmmo = weaponOneMaxAmmo;
-                        ammo = maxAmmo;
-                        Console.WriteLine("Player picked up a " + weaponName);
-                        break;
-                    case 1:
-                        weapon = weap;
-                        weaponName = weaponTwoName;
-                        maxAmmo = weaponTwoMaxAmmo;
-                        ammo = maxAmmo;
-                        Console.WriteLine("Player picked up a " + weaponName);
-                        break;
-                    case 2:
-                        weapon = weap;
-                        weaponName = weaponThreeName;
-                        maxAmmo = weaponThreeMaxAmmo;
-                        ammo = maxAmmo;
-                        Console.WriteLine("Player picked up a " + weaponName);
-                        break;
-                    default:
-                        Console.WriteLine("Error: Not a valid weapon");
-                        break;
-                }
+                switch (weap)                                                   //switch weapon
+                {                                                               //
+                    case 0:                                                     //  //
+                        weapon = weap;                                          //  //
+                        weaponName = weaponOneName;                             //  //
+                        maxAmmo = weaponOneMaxAmmo;                             //  //revolver
+                        ammo = maxAmmo;                                         //  //
+                        Console.WriteLine("Player picked up a " + weaponName);  //  //
+                        break;                                                  //  //
+                    case 1:                                                     //      //
+                        weapon = weap;                                          //      //
+                        weaponName = weaponTwoName;                             //      //
+                        maxAmmo = weaponTwoMaxAmmo;                             //      //shotgun
+                        ammo = maxAmmo;                                         //      //
+                        Console.WriteLine("Player picked up a " + weaponName);  //      //
+                        break;                                                  //      //
+                    case 2:                                                     //          //
+                        weapon = weap;                                          //          //
+                        weaponName = weaponThreeName;                           //          //
+                        maxAmmo = weaponThreeMaxAmmo;                           //          //laser rifle
+                        ammo = maxAmmo;                                         //          //
+                        Console.WriteLine("Player picked up a " + weaponName);  //          //
+                        break;                                                  //          //
+                    default:                                                    //  //
+                        Console.WriteLine("Error: Not a valid weapon");         //  //error check
+                        break;                                                  //  //
+                }                                                               //
             }
-            SetDifs();          
+
+            SetDifs(); //compare current stats to stats at start of method      
         }
 
         static void Fire(int times)
         {
-            SetPrevs();
+            SetPrevs();//save current stats
             Console.WriteLine("firing " + times.ToString() + " times");
-            if (times >= 0)
+            if (times >= 0)//error check
             {
-                while(times > 0 && ammo > 0)
-                {
-                    times--;
-                    ammo--;
-                    Console.WriteLine("Bang!");
-                }
-                while (times > 0 && ammo <= 0)
-                {
-                    times--;
-                    ammo = 0;
-                    Console.WriteLine("Click");
-                }
+                while(times > 0 && ammo > 0)        //
+                {                                   //
+                    times--;                        //has ammmo
+                    ammo--;                         //
+                    Console.WriteLine("Bang!");     //
+                }                                   //
+                while (times > 0 && ammo <= 0)          //
+                {                                       //
+                    times--;                            //ammo'nt
+                    ammo = 0;                           //
+                    Console.WriteLine("Click");         //
+                }                                       //
             }
-            else
-            {
-                Console.WriteLine("Error: can't fire negative times");
-            }
-            SetDifs();
+            else                                                        //
+            {                                                           //
+                Console.WriteLine("Error: can't fire negative times");  //error
+            }                                                           //
+
+            SetDifs(); //compare current stats to stats at start of method
         }
 
         static void Reload()
         {
-            SetPrevs();
+            SetPrevs();//save current stats
             ammo = maxAmmo;
             Console.WriteLine("Player reloaded");
-            SetDifs();
+            SetDifs(); //compare current stats to stats at start of method
         }
 
         static void SetPrevs()
         {
+            //save the current stats
             prevShield = shield;
             prevHealth = health;
             prevLives = lives;
@@ -461,6 +501,7 @@ namespace HealthSystem
 
         static void SetDifs()
         {
+            //compare current stats to the stats held at the last SetPrevs()
             difShield = shield - prevShield;
             difHealth = health - prevHealth;
             difLives = lives - prevLives;
