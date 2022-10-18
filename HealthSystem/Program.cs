@@ -75,6 +75,7 @@ namespace HealthSystem
         static int defaultWeapon = 0;
         static string defaultWeaponName = weaponOneName;
         static int defaultMaxAmmo = weaponOneMaxAmmo;
+        static int defaultDMG = weaponOneDMG;
         static int defaultAmmo = defaultMaxAmmo;
 
         //input
@@ -82,8 +83,10 @@ namespace HealthSystem
 
         //enemy
         static int enemy;
-        static string enemyName;
+        static string eName;
         static int eHealth;
+        static int prevEHealth;
+        static int difEHealth;
         static int eMaxHealth;
         static int eDMG;
         static int eXP;
@@ -92,22 +95,22 @@ namespace HealthSystem
         //Enemies
         //Slime
         const string eOneName = "Slime";
-        const int eOneMaxHealth = 5;
+        static int eOneMaxHealth = 5;
         const int eOneDMG = 5;
         const int eOneXP = 25;
         //Goblin
         const string eTwoName = "Goblin";
-        const int eTwoMaxHealth = 7;
+        static int eTwoMaxHealth = 7;
         const int eTwoDMG = 10;
         const int eTwoXP = 50;
         //Spirit
         const string eThreeName = "Spirit";
-        const int eThreeMaxHealth = 10;
+        static int eThreeMaxHealth = 10;
         const int eThreeDMG = 15;
         const int eThreeXP = 75;
         //Imp
         const string eFourName = "Imp";
-        const int eFourMaxHealth = 15;
+        static int eFourMaxHealth = 15;
         const int eFourDMG = 15;
         const int eFourXP = 100;
 
@@ -148,6 +151,7 @@ namespace HealthSystem
                     Console.ReadKey(true);
                     enemyCount = maxEnemyCount;
                     Reset();
+                    Console.Clear();
                     GenEnemy();
                     break;
                 default:
@@ -168,6 +172,7 @@ namespace HealthSystem
             xp = defaultXP;
             weapon = defaultWeapon;
             weaponName = defaultWeaponName;
+            weaponDMG = defaultDMG;
             ammo = defaultAmmo;
             maxAmmo = defaultMaxAmmo;
             DetermineStatus();
@@ -628,6 +633,11 @@ namespace HealthSystem
             prevShieldCount = shieldCount;
         }
 
+        static void SetEPrevs()
+        {
+            prevEHealth = eHealth;
+        } 
+
         static void SetDifs()
         {
             //compare current stats to the stats held at the last SetPrevs()
@@ -639,6 +649,11 @@ namespace HealthSystem
             difAmmo = ammo - prevAmmo;
             difHealCount = healCount - prevHealCount;
             difShieldCount = shieldCount - prevShieldCount;
+        }
+
+        static void SetEDifs()
+        {
+            difEHealth = eHealth - prevEHealth;
         }
 
         static void UnitTest()
@@ -952,28 +967,28 @@ namespace HealthSystem
             switch (enemyFinder)
             {
                 case 0:
-                    enemyName = eOneName;
+                    eName = eOneName;
                     eMaxHealth = eOneMaxHealth;
                     eHealth = eMaxHealth;
                     eDMG = eOneDMG;
                     eXP = eOneXP;
                     break;
                 case 1:
-                    enemyName = eTwoName;
+                    eName = eTwoName;
                     eMaxHealth = eTwoMaxHealth;
                     eHealth = eMaxHealth;
                     eDMG = eTwoDMG;
                     eXP = eTwoXP;
                     break;
                 case 2:
-                    enemyName = eThreeName;
+                    eName = eThreeName;
                     eMaxHealth = eThreeMaxHealth;
                     eHealth = eMaxHealth;
                     eDMG = eThreeDMG;
                     eXP = eThreeXP;
                     break;
                 case 3:
-                    enemyName = eFourName;
+                    eName = eFourName;
                     eMaxHealth = eFourMaxHealth;
                     eHealth = eMaxHealth;
                     eDMG = eFourDMG;
@@ -983,7 +998,7 @@ namespace HealthSystem
                     Console.WriteLine("Error: Invalid Enemy");
                     break;
             }
-            Console.WriteLine("A " + enemyName + " appeared!");
+            Console.WriteLine("A " + eName + " appeared!");
             Console.ReadKey(true);
             Round();
         }
@@ -1039,38 +1054,43 @@ namespace HealthSystem
                     break;
             }
             Console.WriteLine();
-            Console.WriteLine(enemyName + " HP: " + eHealth);
+            Console.WriteLine(eName + " HP: " + eHealth.ToString());
         }
 
         static void GetBattleInput()
         {
             Console.WriteLine("Do you want to 'attack', 'reload', 'use item' or 'run'?");
             playerInput = Console.ReadLine();
-            Console.Clear();
-            DrawEnemy(enemy);
-            ShowHud();
             switch (playerInput)
             {
                 case "attack":
                     if(ammo > 0)
                     {
-                        if (eIsBlocking == false)
-                        {
-                            DealDMG(weaponDMG);
-                        }
-                        else
-                        {
-                            DealDMG(weaponDMG / 2);
-                        }
+                        DealDMG(weaponDMG);
                     }
                     Fire(1);
+
+                    Console.ReadKey(true);
+                    Console.Clear();
+                    DrawEnemy(enemy);
+                    ShowHud();
                     break;
                 case "reload":
                     Reload();
+
+                    Console.ReadKey(true);
+                    Console.Clear();
+                    DrawEnemy(enemy);
+                    ShowHud();
                     break;
                 case "use item":
                     Console.WriteLine("Which item? " + healName + " or " + shieldName);
                     UseItem(Console.ReadLine());
+
+                    Console.ReadKey(true);
+                    Console.Clear();
+                    DrawEnemy(enemy);
+                    ShowHud();
                     break;
                 case "run":
                     break;
@@ -1079,7 +1099,6 @@ namespace HealthSystem
                     GetBattleInput();
                     break;
             }
-            ShowHud();
         }
 
         static void LootDrop()
@@ -1136,7 +1155,17 @@ namespace HealthSystem
 
         static void DealDMG(int DMG)
         {
+            if (eIsBlocking == true)
+            {
+                DMG = DMG / 2;
+            }
+            Console.WriteLine(eName + " is taking " + DMG.ToString() + " damage");
             eHealth -= DMG;
+            if (eHealth < 0)
+            {
+                eHealth = 0;
+            }
+            SetEDifs();
         }
 
         static void UseItem(string Item)
@@ -1151,28 +1180,27 @@ namespace HealthSystem
                         if(healCount < 0)
                         {
                             healCount = 0;
-                        }
-                        else
-                        {
-                            Console.WriteLine("you don't have any");
-                            GetBattleInput();
-                        }
+                        }                        
+                    }
+                    else
+                    {
+                        Console.WriteLine("you don't have any");
+                        GetBattleInput();
                     }
                     break;
                 case shieldName:
                     if(shieldCount > 0)
                     {
                         RegenShield(shieldPower);
-                        shieldCount--;
                         if(shieldCount < 0)
                         {
                             shieldCount = 0;
                         }
-                        else
-                        {
-                            Console.WriteLine("you don't have any");
-                            GetBattleInput();
-                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("you don't have any");
+                        GetBattleInput();
                     }
                     break;
                 default:
@@ -1231,15 +1259,15 @@ namespace HealthSystem
             switch (EnemyMind)
             {
                 case 0:
-                    Console.WriteLine("The " + enemyName + " attacks!");
+                    Console.WriteLine("The " + eName + " attacks!");
                     TakeDMG(eDMG);
                     break;
                 case 1:
-                    Console.WriteLine("The " + enemyName + " prepared to take an attack!");
+                    Console.WriteLine("The " + eName + " prepared to take an attack!");
                     eIsBlocking = true;
                     break;
                 case 2:
-                    Console.WriteLine("The " + enemyName + " seems distracted.");
+                    Console.WriteLine("The " + eName + " seems distracted.");
                     break;
                 default:
                     Console.WriteLine("Error: Invalid Enemy Action.");
@@ -1250,6 +1278,9 @@ namespace HealthSystem
 
         static void Round()
         {
+            SetPrevs();
+            SetDifs();
+            SetEPrevs();
             Console.Clear();
             DrawEnemy(enemy);
             ShowHud();
