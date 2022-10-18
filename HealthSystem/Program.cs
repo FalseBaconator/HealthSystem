@@ -50,6 +50,7 @@ namespace HealthSystem
         //current weapon and ammo
         static int weapon;
         static string weaponName;
+        static int weaponDMG;
         static int ammo;
         static int prevAmmo;
         static int difAmmo;
@@ -58,20 +59,43 @@ namespace HealthSystem
         //revolver stats
         static string weaponOneName = "Revolver";
         static int weaponOneMaxAmmo = 6;
+        static int weaponOneDMG = 3;
 
         //shotgun stats
         static string weaponTwoName = "ShotGun";
         static int weaponTwoMaxAmmo = 2;
+        static int weaponTwoDMG = 10;
 
-        //laser stats
-        static string weaponThreeName = "Laser Rifle";
+        //rifle stats
+        static string weaponThreeName = "Rifle";
         static int weaponThreeMaxAmmo = 10;
+        static int weaponThreeDMG = 5;
 
         //default is revolver
         static int defaultWeapon = 0;
         static string defaultWeaponName = weaponOneName;
         static int defaultMaxAmmo = weaponOneMaxAmmo;
         static int defaultAmmo = defaultMaxAmmo;
+
+        //input
+        static string playerInput;
+
+        //enemy
+        static int eHealth;
+        static int eMaxHealth;
+        static int eDMG;
+
+        //Items
+        const string healName = "Health Pack";
+        static int healCount;
+        static int prevHealCount;
+        static int difHealCount;
+        static int healPower = 50;
+        const string shieldName = "Shield Pack";
+        static int shieldCount;
+        static int prevShieldCount;
+        static int difShieldCount;
+        static int shieldPower = 50;
 
         //Methods
 
@@ -258,6 +282,52 @@ namespace HealthSystem
 
             Console.WriteLine("-----------------------");
             Console.WriteLine();
+
+            //Inventory
+
+            Console.WriteLine("Inventory");
+
+            //HealPacks
+            Console.Write(healName + ": " + healCount);
+            if (difHealCount > 0) //ammo gained
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(" +" + difHealCount.ToString());
+                Console.ResetColor();
+            }
+            else if (difHealCount < 0) // ammo lost
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" " + difHealCount.ToString());
+                Console.ResetColor();
+            }
+            else //no change
+            {
+                Console.WriteLine();
+            }
+
+            //ShieldPacks
+            Console.Write(shieldName + ": " + shieldCount);
+            if (difShieldCount > 0) //ammo gained
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(" +" + difShieldCount.ToString());
+                Console.ResetColor();
+            }
+            else if (difShieldCount < 0) // ammo lost
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" " + difShieldCount.ToString());
+                Console.ResetColor();
+            }
+            else //no change
+            {
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("-----------------------");
+            Console.WriteLine();
+
             Console.ReadKey(true);
 
         }
@@ -426,6 +496,7 @@ namespace HealthSystem
                         weaponName = weaponOneName;                             //  //
                         maxAmmo = weaponOneMaxAmmo;                             //  //revolver
                         ammo = maxAmmo;                                         //  //
+                        weaponDMG = weaponOneDMG;                               //  //
                         Console.WriteLine("Player picked up a " + weaponName);  //  //
                         break;                                                  //  //
                     case 1:                                                     //      //
@@ -433,6 +504,7 @@ namespace HealthSystem
                         weaponName = weaponTwoName;                             //      //
                         maxAmmo = weaponTwoMaxAmmo;                             //      //shotgun
                         ammo = maxAmmo;                                         //      //
+                        weaponDMG = weaponTwoDMG;                               //      //
                         Console.WriteLine("Player picked up a " + weaponName);  //      //
                         break;                                                  //      //
                     case 2:                                                     //          //
@@ -440,6 +512,7 @@ namespace HealthSystem
                         weaponName = weaponThreeName;                           //          //
                         maxAmmo = weaponThreeMaxAmmo;                           //          //laser rifle
                         ammo = maxAmmo;                                         //          //
+                        weaponDMG = weaponThreeDMG;                             //          //
                         Console.WriteLine("Player picked up a " + weaponName);  //          //
                         break;                                                  //          //
                     default:                                                    //  //
@@ -495,6 +568,8 @@ namespace HealthSystem
             prevLvl = lvl;
             prevXP = xp;
             prevAmmo = ammo;
+            prevHealCount = healCount;
+            prevShieldCount = shieldCount;
         }
 
         static void SetDifs()
@@ -506,6 +581,8 @@ namespace HealthSystem
             difLvl = lvl - prevLvl;
             difXP = xp - prevXP;
             difAmmo = ammo - prevAmmo;
+            difHealCount = healCount - prevHealCount;
+            difShieldCount = shieldCount - prevShieldCount;
         }
 
         static void UnitTest()
@@ -810,5 +887,80 @@ namespace HealthSystem
             Reload();
             ShowHud();
         }
+
+        static void GetBattleInput()
+        {
+            Console.WriteLine("Do you want to 'attack', 'reload', 'use item' or 'run'?");
+            playerInput = Console.ReadLine();
+            switch (playerInput)
+            {
+                case "attack":
+                    DealDMG(weaponDMG);
+                    break;
+                case "reload":
+                    Reload();
+                    break;
+                case "use item":
+                    Console.WriteLine("Which item? " + healName + " or " + shieldName);
+                    UseItem(Console.ReadLine());
+                    break;
+                case "run":
+                    break;
+                default:
+                    Console.WriteLine("Error: invalid command");
+                    GetBattleInput();
+                    break;
+            }
+            ShowHud();
+        }
+
+        static void DealDMG(int DMG)
+        {
+            eHealth -= DMG;
+        }
+
+        static void UseItem(string Item)
+        {
+            switch (Item)
+            {
+                case healName:
+                    if (healCount > 0)
+                    {
+                        Heal(healPower);
+                        healCount--;
+                        if(healCount < 0)
+                        {
+                            healCount = 0;
+                        }
+                        else
+                        {
+                            Console.WriteLine("you don't have any");
+                            GetBattleInput();
+                        }
+                    }
+                    break;
+                case shieldName:
+                    if(shieldCount > 0)
+                    {
+                        RegenShield(shieldPower);
+                        shieldCount--;
+                        if(shieldCount < 0)
+                        {
+                            shieldCount = 0;
+                        }
+                        else
+                        {
+                            Console.WriteLine("you don't have any");
+                            GetBattleInput();
+                        }
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Error: Invalid item");
+                    GetBattleInput();
+                    break;
+            }
+        }
+
     }
 }
