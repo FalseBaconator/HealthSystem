@@ -57,19 +57,19 @@ namespace HealthSystem
         static int maxAmmo;
 
         //revolver stats
-        static string weaponOneName = "Revolver";
-        static int weaponOneMaxAmmo = 6;
-        static int weaponOneDMG = 3;
+        const string weaponOneName = "Revolver";
+        const int weaponOneMaxAmmo = 6;
+        const int weaponOneDMG = 4;
 
         //shotgun stats
-        static string weaponTwoName = "ShotGun";
-        static int weaponTwoMaxAmmo = 2;
-        static int weaponTwoDMG = 10;
+        const string weaponTwoName = "ShotGun";
+        const int weaponTwoMaxAmmo = 2;
+        const int weaponTwoDMG = 10;
 
         //rifle stats
-        static string weaponThreeName = "Rifle";
-        static int weaponThreeMaxAmmo = 10;
-        static int weaponThreeDMG = 5;
+        const string weaponThreeName = "Rifle";
+        const int weaponThreeMaxAmmo = 10;
+        const int weaponThreeDMG = 6;
 
         //default is revolver
         static int defaultWeapon = 0;
@@ -81,21 +81,54 @@ namespace HealthSystem
         static string playerInput;
 
         //enemy
+        static int enemy;
+        static string enemyName;
         static int eHealth;
         static int eMaxHealth;
         static int eDMG;
+        static int eXP;
+        static bool eIsBlocking = false;
+
+        //Enemies
+        //Slime
+        const string eOneName = "Slime";
+        const int eOneMaxHealth = 5;
+        const int eOneDMG = 5;
+        const int eOneXP = 25;
+        //Goblin
+        const string eTwoName = "Goblin";
+        const int eTwoMaxHealth = 7;
+        const int eTwoDMG = 10;
+        const int eTwoXP = 50;
+        //Spirit
+        const string eThreeName = "Spirit";
+        const int eThreeMaxHealth = 10;
+        const int eThreeDMG = 15;
+        const int eThreeXP = 75;
+        //Imp
+        const string eFourName = "Imp";
+        const int eFourMaxHealth = 15;
+        const int eFourDMG = 15;
+        const int eFourXP = 100;
 
         //Items
+        const int maxItems = 99;
+        //heal
         const string healName = "Health Pack";
         static int healCount;
         static int prevHealCount;
         static int difHealCount;
         static int healPower = 50;
+        //shield
         const string shieldName = "Shield Pack";
         static int shieldCount;
         static int prevShieldCount;
         static int difShieldCount;
         static int shieldPower = 50;
+
+        //Game
+        static int enemyCount;
+        const int maxEnemyCount = 5;
 
         //Methods
 
@@ -888,6 +921,48 @@ namespace HealthSystem
             ShowHud();
         }
 
+        static void GenEnemy()
+        {
+            Random rand = new Random();
+            int enemyFinder = rand.Next(0, 4);
+            enemy = enemyFinder;
+            switch (enemyFinder)
+            {
+                case 0:
+                    enemyName = eOneName;
+                    eMaxHealth = eOneMaxHealth;
+                    eHealth = eMaxHealth;
+                    eDMG = eOneDMG;
+                    eXP = eOneXP;
+                    break;
+                case 1:
+                    enemyName = eTwoName;
+                    eMaxHealth = eTwoMaxHealth;
+                    eHealth = eMaxHealth;
+                    eDMG = eTwoDMG;
+                    eXP = eTwoXP;
+                    break;
+                case 2:
+                    enemyName = eThreeName;
+                    eMaxHealth = eThreeMaxHealth;
+                    eHealth = eMaxHealth;
+                    eDMG = eThreeDMG;
+                    eXP = eThreeXP;
+                    break;
+                case 3:
+                    enemyName = eFourName;
+                    eMaxHealth = eFourMaxHealth;
+                    eHealth = eMaxHealth;
+                    eDMG = eFourDMG;
+                    eXP = eFourXP;
+                    break;
+                default:
+                    Console.WriteLine("Error: Invalid Enemy");
+                    break;
+            }
+            Console.WriteLine("A " + enemyName + " appeared!");
+        }
+
         static void GetBattleInput()
         {
             Console.WriteLine("Do you want to 'attack', 'reload', 'use item' or 'run'?");
@@ -895,7 +970,18 @@ namespace HealthSystem
             switch (playerInput)
             {
                 case "attack":
-                    DealDMG(weaponDMG);
+                    if(ammo > 0)
+                    {
+                        if (eIsBlocking == false)
+                        {
+                            DealDMG(weaponDMG);
+                        }
+                        else
+                        {
+                            DealDMG(weaponDMG / 2);
+                        }
+                    }
+                    Fire(1);
                     break;
                 case "reload":
                     Reload();
@@ -912,6 +998,23 @@ namespace HealthSystem
                     break;
             }
             ShowHud();
+        }
+
+        static void GetLootInput(string ItemName)
+        {
+            Console.WriteLine("You see a " + ItemName + ". What do you do? 'Pick Up' or 'Ignore'?");
+            playerInput = Console.ReadLine();
+            switch (playerInput)
+            {
+                case "Pick Up":
+                    break;
+                case "Ignore":
+                    break;
+                default:
+                    Console.WriteLine("Error: Invalid Command");
+                    GetLootInput(ItemName);
+                    break;
+            }
         }
 
         static void DealDMG(int DMG)
@@ -962,5 +1065,97 @@ namespace HealthSystem
             }
         }
 
+        static void PickUp(string ItemName)
+        {
+            switch (ItemName)
+            {
+                case weaponOneName:
+                    SwitchWeapon(0);
+                    break;
+                case weaponTwoName:
+                    SwitchWeapon(1);
+                    break;
+                case weaponThreeName:
+                    SwitchWeapon(2);
+                    break;
+                case healName:
+                    Console.WriteLine("Picked up a " + healName);
+                    SetPrevs();
+                    healCount++;
+                    if(healCount > maxItems)
+                    {
+                        healCount = maxItems;
+                        Console.WriteLine("You can't hold any more.");
+                    }
+                    SetDifs();
+                    break;
+                case shieldName:
+                    Console.WriteLine("Picked up a " + shieldName);
+                    SetPrevs();
+                    shieldCount++;
+                    if (shieldCount > maxItems)
+                    {
+                        shieldCount = maxItems;
+                        Console.WriteLine("You can't hold any more.");
+                    }
+                    SetDifs();
+                    break;
+                default:
+                    Console.WriteLine("Error: Invalid Item");
+                    break;
+            }
+        }
+
+        static void EnemyTurn()
+        {
+            eIsBlocking = false;
+            Random rand = new Random();
+            int EnemyMind = rand.Next(0, 4);
+            switch (EnemyMind)
+            {
+                case 0:
+                    Console.WriteLine("The " + enemyName + " attacks!");
+                    TakeDMG(eDMG);
+                    break;
+                case 1:
+                    Console.WriteLine("The " + enemyName + " prepared to take an attack!");
+                    eIsBlocking = true;
+                    break;
+                case 2:
+                    Console.WriteLine("The " + enemyName + "seems distracted.");
+                    break;
+                default:
+                    Console.WriteLine("Error: Invalid Enemy Action.");
+                    break;
+            }
+
+        }
+
+        static void Round()
+        {
+            Console.Clear();
+            ShowHud();
+            EnemyTurn();
+            Console.ReadKey(true);
+            Console.Clear();
+            GetBattleInput();
+
+            if(eHealth <= 0)
+            {
+                enemyCount--;
+                if(enemyCount <= 0)
+                {
+                    enemyCount = 0;
+                    Win();
+                }
+            }
+        }
+
+        static void Win()
+        {
+            Console.WriteLine("You Win!");
+            Console.ReadKey(true);
+            return;
+        }
     }
 }
