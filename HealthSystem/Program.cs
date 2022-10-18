@@ -131,7 +131,7 @@ namespace HealthSystem
 
         //Game
         static int enemyCount;
-        const int maxEnemyCount = 5;
+        const int maxEnemyCount = 10;
 
         //Methods
 
@@ -1054,7 +1054,17 @@ namespace HealthSystem
                     break;
             }
             Console.WriteLine();
-            Console.WriteLine(eName + " HP: " + eHealth.ToString());
+            Console.Write(eName + " HP: " + eHealth.ToString());
+            if (difEHealth < 0) //health lost
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" " + difEHealth.ToString());
+                Console.ResetColor();
+            }
+            else //no change
+            {
+                Console.WriteLine();
+            }
         }
 
         static void GetBattleInput()
@@ -1281,6 +1291,7 @@ namespace HealthSystem
             SetPrevs();
             SetDifs();
             SetEPrevs();
+            SetEDifs();
             Console.Clear();
             DrawEnemy(enemy);
             ShowHud();
