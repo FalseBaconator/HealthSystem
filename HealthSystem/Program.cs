@@ -8,6 +8,8 @@ namespace HealthSystem
 {
     internal class Program
     {
+        //Variables
+
         //HP
         static int health;
         static int prevHealth; //Previous health
@@ -71,7 +73,7 @@ namespace HealthSystem
         static int defaultMaxAmmo = weaponOneMaxAmmo;
         static int defaultAmmo = defaultMaxAmmo;
 
-
+        //Methods
 
         static void Main(string[] args)
         {
@@ -128,7 +130,6 @@ namespace HealthSystem
             {
                 status = "Something went wrong in DetermineStatus()";
             }
-
         }
 
         static void ShowHud()
@@ -254,9 +255,6 @@ namespace HealthSystem
             {
                 Console.WriteLine();
             }
-
-
-
 
             Console.WriteLine("-----------------------");
             Console.WriteLine();
@@ -581,7 +579,9 @@ namespace HealthSystem
             //take enough damage to die
             Reset();
             ShowHud();
-            TakeDMG(250);
+            TakeDMG(150);
+            ShowHud();
+            TakeDMG(100);
             ShowHud();
 
             //Die 3 times
@@ -809,13 +809,6 @@ namespace HealthSystem
             ShowHud();
             Reload();
             ShowHud();
-
-
         }
-
-
-
-
-
     }
 }
