@@ -134,7 +134,28 @@ namespace HealthSystem
 
         static void Main(string[] args)
         {
-            UnitTest();
+            Console.WriteLine("Do you want to do a 'Unit Test' or 'Play' the game?");
+            playerInput = Console.ReadLine();
+            switch (playerInput)
+            {
+                case "Unit Test":
+                    Console.WriteLine("Beginning Unit Tests");
+                    Console.ReadKey(true);
+                    UnitTest();
+                    break;
+                case "Play":
+                    Console.WriteLine("Beginning Game");
+                    Console.ReadKey(true);
+                    enemyCount = maxEnemyCount;
+                    Reset();
+                    GenEnemy();
+                    break;
+                default:
+                    Console.WriteLine("Error: invalid entry");
+                    Console.ReadKey(true);
+                    break;
+
+            }
         }
 
         static void Reset()
@@ -155,10 +176,12 @@ namespace HealthSystem
             SetPrevs();
             SetDifs();
 
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine("A RESET OCCURRED");
-            Console.WriteLine();
+            
+            //Console.Clear();
+            //Console.WriteLine();
+            //Console.WriteLine("A RESET OCCURRED");
+            //Console.WriteLine();
+            
         }
 
         static void DetermineStatus()
@@ -961,12 +984,71 @@ namespace HealthSystem
                     break;
             }
             Console.WriteLine("A " + enemyName + " appeared!");
+            Console.ReadKey(true);
+            Round();
+        }
+
+        static void DrawEnemy(int Ene)
+        {
+            Console.WriteLine();
+            switch (Ene)
+            {
+                case 0: //slime
+                    Console.WriteLine("    ____    ");
+                    Console.WriteLine("   /    \\   ");
+                    Console.WriteLine("  |      |  ");
+                    Console.WriteLine(" /        \\ ");
+                    Console.WriteLine(" \\________/ ");
+                    break;
+                case 1: //goblin
+                    Console.WriteLine("     _____    ");
+                    Console.WriteLine("   _/ * * \\_   ");
+                    Console.WriteLine("   \\   _   /  ");
+                    Console.WriteLine("    \\_____/ ");
+                    Console.WriteLine("      /|\\     ");
+                    Console.WriteLine("   o_/ | \\    ");
+                    Console.WriteLine("  \\|   |  \\   ");
+                    Console.WriteLine("      /-\\  o  ");
+                    Console.WriteLine("     /   \\    ");
+                    Console.WriteLine("   _/     \\_  ");
+                    break;
+                case 2: //ghost
+                    Console.WriteLine("    _______    ");
+                    Console.WriteLine("   /       \\   ");
+                    Console.WriteLine("  |  X   X  |  ");
+                    Console.WriteLine("  |         |  ");
+                    Console.WriteLine("  |         |  ");
+                    Console.WriteLine("  |         |  ");
+                    Console.WriteLine("  |         |  ");
+                    Console.WriteLine("  \\/\\/\\/\\/\\/  ");
+                    break;
+                case 3: //imp
+                    Console.WriteLine("   |\\___/|   ");
+                    Console.WriteLine("  /  ^ ^  \\  ");
+                    Console.WriteLine("  |   _,  |  ");
+                    Console.WriteLine("   \\_____/   ");
+                    Console.WriteLine("   ___|___   ");
+                    Console.WriteLine("  /  /|\\  \\  ");
+                    Console.WriteLine("  WW/W|W\\WW  ");
+                    Console.WriteLine("   o /-\\ o   ");
+                    Console.WriteLine("    /   \\    ");
+                    Console.WriteLine("  _/     \\_");
+                    break;
+                default:
+                    Console.WriteLine("Error: Invalid Enemy in Draw");
+                    break;
+            }
+            Console.WriteLine();
+            Console.WriteLine(enemyName + " HP: " + eHealth);
         }
 
         static void GetBattleInput()
         {
             Console.WriteLine("Do you want to 'attack', 'reload', 'use item' or 'run'?");
             playerInput = Console.ReadLine();
+            Console.Clear();
+            DrawEnemy(enemy);
+            ShowHud();
             switch (playerInput)
             {
                 case "attack":
@@ -1000,6 +1082,39 @@ namespace HealthSystem
             ShowHud();
         }
 
+        static void LootDrop()
+        {
+            Random rand = new Random();
+            int ItemFinder = rand.Next(0, 7);
+            switch (ItemFinder)
+            {
+                case 0:
+                    GetLootInput(weaponOneName);
+                    break;
+                case 1:
+                    GetLootInput(weaponTwoName);
+                    break;
+                case 2:
+                    GetLootInput(weaponThreeName);
+                    break;
+                case 3:
+                    GetLootInput(healName);
+                    break;
+                case 4:
+                    GetLootInput(healName);
+                    break;
+                case 5:
+                    GetLootInput(shieldName);
+                    break;
+                case 6:
+                    GetLootInput(shieldName);
+                    break;
+                default:
+                    Console.WriteLine("Error: Invalid Item");
+                    break;
+            }
+        }
+
         static void GetLootInput(string ItemName)
         {
             Console.WriteLine("You see a " + ItemName + ". What do you do? 'Pick Up' or 'Ignore'?");
@@ -1007,8 +1122,10 @@ namespace HealthSystem
             switch (playerInput)
             {
                 case "Pick Up":
+                    PickUp(ItemName);
                     break;
                 case "Ignore":
+                    Console.WriteLine("You decided to ignore it for some reason.");
                     break;
                 default:
                     Console.WriteLine("Error: Invalid Command");
@@ -1110,7 +1227,7 @@ namespace HealthSystem
         {
             eIsBlocking = false;
             Random rand = new Random();
-            int EnemyMind = rand.Next(0, 4);
+            int EnemyMind = rand.Next(0, 3);
             switch (EnemyMind)
             {
                 case 0:
@@ -1122,7 +1239,7 @@ namespace HealthSystem
                     eIsBlocking = true;
                     break;
                 case 2:
-                    Console.WriteLine("The " + enemyName + "seems distracted.");
+                    Console.WriteLine("The " + enemyName + " seems distracted.");
                     break;
                 default:
                     Console.WriteLine("Error: Invalid Enemy Action.");
@@ -1134,20 +1251,35 @@ namespace HealthSystem
         static void Round()
         {
             Console.Clear();
+            DrawEnemy(enemy);
             ShowHud();
             EnemyTurn();
             Console.ReadKey(true);
             Console.Clear();
+            DrawEnemy(enemy);
+            ShowHud();
             GetBattleInput();
 
             if(eHealth <= 0)
             {
+                Console.Clear();
                 enemyCount--;
                 if(enemyCount <= 0)
                 {
                     enemyCount = 0;
                     Win();
                 }
+                else
+                {
+                    GainXP(eXP);
+                    ShowHud();
+                    LootDrop();
+                    GenEnemy();
+                }
+            }
+            else
+            {
+                Round();
             }
         }
 
