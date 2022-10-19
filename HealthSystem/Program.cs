@@ -81,17 +81,6 @@ namespace HealthSystem
         //input
         static string playerInput;
 
-        //enemy
-        static int enemy;
-        static string eName;
-        static int eHealth;
-        static int prevEHealth;
-        static int difEHealth;
-        static int eMaxHealth;
-        static int eDMG;
-        static int eXP;
-        static bool eIsBlocking = false;
-
         //Enemies
         //Slime
         const string eOneName = "Slime";
@@ -113,6 +102,16 @@ namespace HealthSystem
         static int eFourMaxHealth = 15;
         const int eFourDMG = 15;
         const int eFourXP = 100;
+        //enemy
+        static int enemy = 0;
+        static string eName = eOneName;
+        static int eHealth = eOneMaxHealth;
+        static int prevEHealth;
+        static int difEHealth;
+        static int eMaxHealth = eOneMaxHealth;
+        static int eDMG = eOneDMG;
+        static int eXP = eOneXP;
+        static bool eIsBlocking = false;
 
         //Items
         const int maxItems = 99;
@@ -131,7 +130,6 @@ namespace HealthSystem
 
         //Game
         static int enemyCount;
-        //const int maxEnemyCount = 10;
 
         //Methods
 
@@ -961,41 +959,32 @@ namespace HealthSystem
 
             //Generate and attack Enemy
             Reset();
-            GenEnemy();
-            DrawEnemy(enemy);
+            DrawEnemy(0);
             ShowHud();
             DealDMG(weaponDMG);
-            DrawEnemy(enemy);
+            DrawEnemy(0);
             ShowHud();
 
             //Generate and attack enemy with negative dmg
             Reset();
-            GenEnemy();
-            DrawEnemy(enemy);
+            DrawEnemy(0);
             ShowHud();
             DealDMG(-weaponDMG);
-            DrawEnemy(enemy);
+            DrawEnemy(0);
             ShowHud();
 
             //Generate enemy and have them use their turn
             Reset();
-            GenEnemy();
-            DrawEnemy(enemy);
+            DrawEnemy(0);
             ShowHud();
             EnemyTurn();
-            DrawEnemy(enemy);
+            DrawEnemy(0);
             ShowHud();
 
             //Loot drop
             Reset();
             ShowHud();
             LootDrop();
-            ShowHud();
-
-            //Use Item Health Pack without pack
-            Reset();
-            ShowHud();
-            UseItem(healName);
             ShowHud();
 
             //use item health pack with pack
@@ -1005,11 +994,6 @@ namespace HealthSystem
             TakeDMG(150);
             ShowHud();
             UseItem(healName);
-
-            //Use Item Shield Pack without pack
-            Reset();
-            ShowHud();
-            UseItem(shieldName);
             ShowHud();
 
             //use item shield pack with pack
@@ -1019,6 +1003,7 @@ namespace HealthSystem
             TakeDMG(150);
             ShowHud();
             UseItem(shieldName);
+            ShowHud();
         }
 
         static void GenEnemy()
