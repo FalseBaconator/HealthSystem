@@ -1011,42 +1011,42 @@ namespace HealthSystem
 
         static void GenEnemy()
         {
-            Random rand = new Random();
-            int enemyFinder = rand.Next(0, 4);
-            enemy = enemyFinder;
-            switch (enemyFinder)
-            {
-                case 0:
-                    eName = eOneName;
-                    eMaxHealth = eOneMaxHealth;
-                    eHealth = eMaxHealth;
-                    eDMG = eOneDMG;
-                    eXP = eOneXP;
-                    break;
-                case 1:
-                    eName = eTwoName;
-                    eMaxHealth = eTwoMaxHealth;
-                    eHealth = eMaxHealth;
-                    eDMG = eTwoDMG;
-                    eXP = eTwoXP;
-                    break;
-                case 2:
-                    eName = eThreeName;
-                    eMaxHealth = eThreeMaxHealth;
-                    eHealth = eMaxHealth;
-                    eDMG = eThreeDMG;
-                    eXP = eThreeXP;
-                    break;
-                case 3:
-                    eName = eFourName;
-                    eMaxHealth = eFourMaxHealth;
-                    eHealth = eMaxHealth;
-                    eDMG = eFourDMG;
-                    eXP = eFourXP;
-                    break;
-                default:
-                    Console.WriteLine("Error: Invalid Enemy");
-                    break;
+            Random rand = new Random();         //
+            int enemyFinder = rand.Next(0, 4);  //Random choice
+            enemy = enemyFinder;                //
+            switch (enemyFinder)                                //
+            {                                                   //
+                case 0:                                         //  //
+                    eName = eOneName;                           //  //
+                    eMaxHealth = eOneMaxHealth;                 //  //Enemy 1
+                    eHealth = eMaxHealth;                       //  //Slime
+                    eDMG = eOneDMG;                             //  //
+                    eXP = eOneXP;                               //  //
+                    break;                                      //  //
+                case 1:                                         //      //
+                    eName = eTwoName;                           //      //
+                    eMaxHealth = eTwoMaxHealth;                 //      //Enemy 2
+                    eHealth = eMaxHealth;                       //      //Goblin
+                    eDMG = eTwoDMG;                             //      //
+                    eXP = eTwoXP;                               //      //
+                    break;                                      //      //
+                case 2:                                         //          //
+                    eName = eThreeName;                         //          //
+                    eMaxHealth = eThreeMaxHealth;               //          //Enemy 3
+                    eHealth = eMaxHealth;                       //          //Spirit
+                    eDMG = eThreeDMG;                           //          //
+                    eXP = eThreeXP;                             //          //
+                    break;                                      //          //
+                case 3:                                         //              //
+                    eName = eFourName;                          //              //
+                    eMaxHealth = eFourMaxHealth;                //              //Enemy 4
+                    eHealth = eMaxHealth;                       //              //Imp
+                    eDMG = eFourDMG;                            //              //
+                    eXP = eFourXP;                              //              //
+                    break;                                      //              //
+                default:                                        //                  //
+                    Console.WriteLine("Error: Invalid Enemy");  //                  //Error Check
+                    break;                                      //                  //
             }
             Console.WriteLine("A " + eName + " appeared!");
             Console.ReadKey(true);
@@ -1119,274 +1119,275 @@ namespace HealthSystem
 
         static void GetBattleInput()
         {
-            Console.WriteLine("Do you want to 'attack', 'reload', 'use item' or 'run'?");
-            playerInput = Console.ReadLine().ToLower();
-            switch (playerInput)
-            {
-                case "attack":
-                    if(ammo > 0)
-                    {
-                        DealDMG(weaponDMG);
-                    }
-                    Fire(1);
+            Console.WriteLine("Do you want to 'attack', 'reload', 'use item' or 'run'?");   //Prompt
+            playerInput = Console.ReadLine().ToLower();                                     //
 
-                    Console.ReadKey(true);
-                    Console.Clear();
-                    DrawEnemy(enemy);
-                    ShowHud();
-                    break;
-                case "reload":
-                    Reload();
-
-                    Console.ReadKey(true);
-                    Console.Clear();
-                    DrawEnemy(enemy);
-                    ShowHud();
-                    break;
-                case "use item":
-                    Console.WriteLine("Which item? " + healName + " or " + shieldName);
-                    UseItem(Console.ReadLine().ToLower());
-
-                    Console.ReadKey(true);
-                    Console.Clear();
-                    DrawEnemy(enemy);
-                    ShowHud();
-                    break;
-                case "run":
-                    break;
-                default:
-                    Console.WriteLine("Error: invalid command");
-                    GetBattleInput();
-                    break;
-            }
+            switch (playerInput)                                                        //Switch Statement
+            {                                                                           //
+                case "attack":                                                          //  //Attack
+                    if(ammo > 0)                                                        //  //  //
+                    {                                                                   //  //  //Do you have the ammo to attack?
+                        DealDMG(weaponDMG);                                             //  //  //
+                    }                                                                   //  //      //Fire message regardless (shows bang or click)
+                    Fire(1);                                                            //  //
+                                                                                        //  //  //
+                    Console.ReadKey(true);                                              //  //  //
+                    Console.Clear();                                                    //  //  //Redraw the screen to show stat changes
+                    DrawEnemy(enemy);                                                   //  //  //
+                    ShowHud();                                                          //  //  //
+                    break;                                                              //  //
+                case "reload":                                                          //          //
+                    Reload();                                                           //          //
+                    Console.ReadKey(true);                                              //          //
+                    Console.Clear();                                                    //          //Reload and redraw to show stat changes
+                    DrawEnemy(enemy);                                                   //          //
+                    ShowHud();                                                          //          //
+                    break;                                                              //          //
+                case "use item":                                                        //  //
+                    Console.WriteLine("Which item? " + healName + " or " + shieldName); //  //  //Determine which item.
+                    UseItem(Console.ReadLine().ToLower());                              //  //  //
+                                                                                        //  //Use Item
+                    Console.ReadKey(true);                                              //  //  //
+                    Console.Clear();                                                    //  //  //Redraw
+                    DrawEnemy(enemy);                                                   //  //  //
+                    ShowHud();                                                          //  //  //
+                    break;                                                              //  //  //
+                case "run":                                                             //          //Run TODO
+                    break;                                                              //          //
+                default:                                                                //  //
+                    Console.WriteLine("Error: invalid command");                        //  //Error Check
+                    GetBattleInput();                                                   //  //
+                    break;                                                              //  //
+            }                                                                           //
         }
 
         static void LootDrop()
         {
-            Random rand = new Random();
-            int ItemFinder = rand.Next(0, 8);
-            switch (ItemFinder)
-            {
-                case 0:
-                    GetLootInput(weaponOneName);
-                    break;
-                case 1:
-                    GetLootInput(weaponTwoName);
-                    break;
-                case 2:
-                    GetLootInput(weaponThreeName);
-                    break;
-                case 3:
-                    GetLootInput(healName);
-                    break;
-                case 4:
-                    GetLootInput(healName);
-                    break;
-                case 5:
-                    GetLootInput(shieldName);
-                    break;
-                case 6:
-                    GetLootInput(shieldName);
-                    break;
-                case 7:
-                    Console.WriteLine("You see a One Up and gain a life.");
-                    OneUp(1);
-                    break;
-                default:
-                    Console.WriteLine("Error: Invalid Item");
-                    break;
-            }
+            Random rand = new Random();         //randomize
+            int ItemFinder = rand.Next(0, 8);   //
+            switch (ItemFinder)                                             //
+            {                                                               //
+                case 0:                                                     //  //
+                    GetLootInput(weaponOneName);                            //  //
+                    break;                                                  //  //
+                case 1:                                                     //  //
+                    GetLootInput(weaponTwoName);                            //  // Weapons
+                    break;                                                  //  //
+                case 2:                                                     //  //
+                    GetLootInput(weaponThreeName);                          //  //
+                    break;                                                  //  //
+                case 3:                                                     //      //
+                    GetLootInput(healName);                                 //      //
+                    break;                                                  //      //Heal Packs
+                case 4:                                                     //      //
+                    GetLootInput(healName);                                 //      //
+                    break;                                                  //      //
+                case 5:                                                     //          //
+                    GetLootInput(shieldName);                               //          //
+                    break;                                                  //          //Shield Packs
+                case 6:                                                     //          //
+                    GetLootInput(shieldName);                               //          //
+                    break;                                                  //          //
+                case 7:                                                     //  //
+                    Console.WriteLine("You see a One Up and gain a life."); //  //One Ups
+                    OneUp(1);                                               //  //
+                    break;                                                  //  //
+                default:                                                    //      //
+                    Console.WriteLine("Error: Invalid Item");               //      //Error Check
+                    break;                                                  //      //
+            }                                                               //
         }
 
         static void GetLootInput(string ItemName)
         {
-            Console.WriteLine("You see a " + ItemName + ". What do you do? 'pick up' or 'ignore'?");
-            playerInput = Console.ReadLine().ToLower();
-            switch (playerInput)
-            {
-                case "pick up":
-                    PickUp(ItemName);
-                    break;
-                case "ignore":
-                    Console.WriteLine("You decided to ignore it for some reason.");
-                    break;
-                default:
-                    Console.WriteLine("Error: Invalid Command");
-                    GetLootInput(ItemName);
-                    break;
-            }
+            Console.WriteLine("You see a " + ItemName + ". What do you do? 'pick up' or 'ignore'?");    //Recieve Input
+            playerInput = Console.ReadLine().ToLower();                                                 //
+            switch (playerInput)                                                        //Switch Statement
+            {                                                                           //
+                case "pick up":                                                         //  //
+                    PickUp(ItemName);                                                   //  //Pick Up Item
+                    break;                                                              //  //
+                case "ignore":                                                          //      //
+                    Console.WriteLine("You decided to ignore it for some reason.");     //      //Ignore item
+                    break;                                                              //      //
+                default:                                                                //  //
+                    Console.WriteLine("Error: Invalid Command");                        //  //Error check. repeats method.
+                    GetLootInput(ItemName);                                             //  //
+                    break;                                                              //  //
+            }                                                                           //
         }
 
         static void DealDMG(int DMG)
         {
-            if(DMG >= 0)
+            if(DMG >= 0)//Error check
             {
-                if (eIsBlocking == true)
-                {
-                    DMG = DMG / 2;
-                }
-                Console.WriteLine(eName + " is taking " + DMG.ToString() + " damage");
-                eHealth -= DMG;
-                if (eHealth < 0)
-                {
-                    eHealth = 0;
-                }
+                if (eIsBlocking == true)    //
+                {                           //Divides dmg if enemy is blocking
+                    DMG = DMG / 2;          //
+                }                           //
+                Console.WriteLine(eName + " is taking " + DMG.ToString() + " damage");  //actual dmg
+                eHealth -= DMG;                                                         //
+                if (eHealth < 0)    //
+                {                   //Range Check
+                    eHealth = 0;    //
+                }                   //
             }
-            else
-            {
-                Console.WriteLine("Error: can't deal negative dmg");
-            }
+            else                                                        //
+            {                                                           //Error
+                Console.WriteLine("Error: can't deal negative dmg");    //
+            }                                                           //
             
-            SetEDifs();
+            SetEDifs(); //compares current estats to last SetEPrevs (In Round())
         }
 
         static void UseItem(string Item)
         {
-            switch (Item)
-            {
-                case healName:
-                    if (healCount > 0)
-                    {
-                        Heal(healPower);
-                        healCount--;
-                        if(healCount < 0)
-                        {
-                            healCount = 0;
-                        }                        
-                    }
-                    else
-                    {
-                        Console.WriteLine("you don't have any");
-                        GetBattleInput();
-                    }
-                    break;
-                case shieldName:
-                    if(shieldCount > 0)
-                    {
-                        RegenShield(shieldPower);
-                        shieldCount--;
-                        if(shieldCount < 0)
-                        {
-                            shieldCount = 0;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("you don't have any");
-                        GetBattleInput();
-                    }
-                    break;
-                default:
-                    Console.WriteLine("Error: Invalid item");
-                    GetBattleInput();
-                    break;
-            }
+            switch (Item)                                           //Switch Statement
+            {                                                       //
+                case healName:                                      //  //Attempt Heal
+                    if (healCount > 0)                              //  //  //
+                    {                                               //  //  //
+                        Heal(healPower);                            //  //  //
+                        healCount--;                                //  //  //
+                        if(healCount < 0)                           //  //  //Heal
+                        {                                           //  //  //
+                            healCount = 0;                          //  //  //
+                        }                                           //  //  //
+                    }                                               //  //  //
+                    else                                            //  //      //
+                    {                                               //  //      //
+                        Console.WriteLine("you don't have any");    //  //      //No Heals
+                        GetBattleInput();                           //  //      //
+                    }                                               //  //      //
+                    break;                                          //  //
+                case shieldName:                                    //              //Attempt Shield Regen
+                    if(shieldCount > 0)                             //              //  //
+                    {                                               //              //  //
+                        RegenShield(shieldPower);                   //              //  //
+                        shieldCount--;                              //              //  //
+                        if(shieldCount < 0)                         //              //  //Shield Regen
+                        {                                           //              //  //
+                            shieldCount = 0;                        //              //  //
+                        }                                           //              //  //
+                    }                                               //              //  //
+                    else                                            //              //      //
+                    {                                               //              //      //
+                        Console.WriteLine("you don't have any");    //              //      //No Regens
+                        GetBattleInput();                           //              //      //
+                    }                                               //              //      //
+                    break;                                          //              //
+                default:                                            //  //
+                    Console.WriteLine("Error: Invalid item");       //  //Error Check
+                    GetBattleInput();                               //  //
+                    break;                                          //  //
+            }                                                       //
         }
 
         static void PickUp(string ItemName)
         {
-            switch (ItemName)
-            {
-                case weaponOneName:
-                    SwitchWeapon(0);
-                    break;
-                case weaponTwoName:
-                    SwitchWeapon(1);
-                    break;
-                case weaponThreeName:
-                    SwitchWeapon(2);
-                    break;
-                case healName:
-                    Console.WriteLine("Picked up a " + healName);
-                    SetPrevs();
-                    healCount++;
-                    if(healCount > maxItems)
-                    {
-                        healCount = maxItems;
-                        Console.WriteLine("You can't hold any more.");
-                    }
-                    SetDifs();
-                    break;
-                case shieldName:
-                    Console.WriteLine("Picked up a " + shieldName);
-                    SetPrevs();
-                    shieldCount++;
-                    if (shieldCount > maxItems)
-                    {
-                        shieldCount = maxItems;
-                        Console.WriteLine("You can't hold any more.");
-                    }
-                    SetDifs();
-                    break;
-                default:
-                    Console.WriteLine("Error: Invalid Item");
-                    break;
-            }
+            switch (ItemName)                                           //Switch Statement
+            {                                                           //
+                case weaponOneName:                                     //  //
+                    SwitchWeapon(0);                                    //  //
+                    break;                                              //  //
+                case weaponTwoName:                                     //  //
+                    SwitchWeapon(1);                                    //  //Weapons
+                    break;                                              //  //
+                case weaponThreeName:                                   //  //
+                    SwitchWeapon(2);                                    //  //
+                    break;                                              //  //
+                case healName:                                          //      //
+                    Console.WriteLine("Picked up a " + healName);       //      //Heal Pack
+                    SetPrevs();                                         //      //
+                    healCount++;                                        //      //
+                    if(healCount > maxItems)                            //      //  //
+                    {                                                   //      //  //
+                        healCount = maxItems;                           //      //  //Max Pack Check
+                        Console.WriteLine("You can't hold any more.");  //      //  //
+                    }                                                   //      //  //
+                    SetDifs();                                          //      //
+                    break;                                              //      //
+                case shieldName:                                        //              //
+                    Console.WriteLine("Picked up a " + shieldName);     //              //Shield Pack
+                    SetPrevs();                                         //              //
+                    shieldCount++;                                      //              //
+                    if (shieldCount > maxItems)                         //              //  //
+                    {                                                   //              //  //
+                        shieldCount = maxItems;                         //              //  //Max Pack Check
+                        Console.WriteLine("You can't hold any more.");  //              //  //
+                    }                                                   //              //  //
+                    SetDifs();                                          //              //
+                    break;                                              //              //
+                default:                                                //  //
+                    Console.WriteLine("Error: Invalid Item");           //  //Error Check
+                    break;                                              //  //
+            }                                                           //
         }
 
         static void EnemyTurn()
         {
-            eIsBlocking = false;
-            Random rand = new Random();
-            int EnemyMind = rand.Next(0, 3);
-            switch (EnemyMind)
-            {
-                case 0:
-                    Console.WriteLine("The " + eName + " attacks!");
-                    TakeDMG(eDMG);
-                    break;
-                case 1:
-                    Console.WriteLine("The " + eName + " prepared to take an attack!");
-                    eIsBlocking = true;
-                    break;
-                case 2:
-                    Console.WriteLine("The " + eName + " seems distracted.");
-                    break;
-                default:
-                    Console.WriteLine("Error: Invalid Enemy Action.");
-                    break;
-            }
+            eIsBlocking = false;                //
+            Random rand = new Random();         //Random Behavior
+            int EnemyMind = rand.Next(0, 3);    //
+            switch (EnemyMind)                                                          //Switch Statement
+            {                                                                           //
+                case 0:                                                                 //  //
+                    Console.WriteLine("The " + eName + " attacks!");                    //  //Attack
+                    TakeDMG(eDMG);                                                      //  //
+                    break;                                                              //  //
+                case 1:                                                                 //      //
+                    Console.WriteLine("The " + eName + " prepared to take an attack!"); //      //Defend
+                    eIsBlocking = true;                                                 //      //
+                    break;                                                              //      //
+                case 2:                                                                 //  //
+                    Console.WriteLine("The " + eName + " seems distracted.");           //  //Free Hit
+                    break;                                                              //  //
+                default:                                                                //      //
+                    Console.WriteLine("Error: Invalid Enemy Action.");                  //      //Error Check
+                    break;                                                              //      //
+            }                                                                           //
 
         }
 
         static void Round()
         {
-            SetPrevs();
-            SetDifs();
-            SetEPrevs();
-            SetEDifs();
-            Console.Clear();
-            DrawEnemy(enemy);
-            ShowHud();
-            EnemyTurn();
-            Console.ReadKey(true);
-            Console.Clear();
-            DrawEnemy(enemy);
-            ShowHud();
-            GetBattleInput();
+            SetEPrevs();        //
+            SetPrevs();         //
+            SetEDifs();         //set the differences back to 0
+            SetDifs();          //
+            Console.Clear();        //
+            DrawEnemy(enemy);       //Enemy Turn
+            ShowHud();              //
+            EnemyTurn();            //
+            Console.ReadKey(true);  //
+            Console.Clear();            //
+            DrawEnemy(enemy);           //Player Turn
+            ShowHud();                  //
+            GetBattleInput();           //
 
-            if(eHealth <= 0)
-            {
-                Console.Clear();
-                enemyCount--;
-                if(enemyCount <= 0)
-                {
-                    enemyCount = 0;
-                    Win();
-                }
-                else
-                {
-                    GainXP(eXP);
-                    ShowHud();
-                    LootDrop();
-                    GenEnemy();
-                }
-            }
-            else
-            {
-                Round();
-            }
+            if(eHealth <= 0)            //Enemy Death Check (if enemy is dead)
+            {                           //
+                Console.Clear();        //
+                enemyCount--;           //
+                if(enemyCount <= 0)     //  //
+                {                       //  //
+                    enemyCount = 0;     //  //If last enemy then win.
+                    Win();              //  //
+                }                       //  //
+                else                    //      //
+                {                       //      //
+                    GainXP(eXP);        //      //
+                    ShowHud();          //      //Otherwise get the rewards and a new enemy
+                    LootDrop();         //      //
+                    GenEnemy();         //      //
+                }                       //      //
+            }                           //
+            else            //
+            {               //If enemy is still alive then start a new round
+                Round();    //
+            }               //
         }
+
 
         static void Win()
         {
