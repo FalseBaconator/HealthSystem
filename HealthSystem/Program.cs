@@ -182,7 +182,7 @@ namespace HealthSystem
             SetDifs();
 
             
-            //Console.Clear();
+            Console.Clear();
             //Console.WriteLine();
             //Console.WriteLine("A RESET OCCURRED");
             //Console.WriteLine();
@@ -957,6 +957,67 @@ namespace HealthSystem
             ShowHud();
             Reload();
             ShowHud();
+
+            //Generate and attack Enemy
+            Reset();
+            GenEnemy();
+            DrawEnemy(enemy);
+            ShowHud();
+            DealDMG(weaponDMG);
+            DrawEnemy(enemy);
+            ShowHud();
+
+            //Generate and attack enemy with negative dmg
+            Reset();
+            GenEnemy();
+            DrawEnemy(enemy);
+            ShowHud();
+            DealDMG(-weaponDMG);
+            DrawEnemy(enemy);
+            ShowHud();
+
+            //Generate enemy and have them use their turn
+            Reset();
+            GenEnemy();
+            DrawEnemy(enemy);
+            ShowHud();
+            EnemyTurn();
+            DrawEnemy(enemy);
+            ShowHud();
+
+            //Loot drop
+            Reset();
+            ShowHud();
+            LootDrop();
+            ShowHud();
+
+            //Use Item Health Pack without pack
+            Reset();
+            ShowHud();
+            UseItem(healName);
+            ShowHud();
+
+            //use item health pack with pack
+            Reset();
+            healCount++;
+            ShowHud();
+            TakeDMG(150);
+            ShowHud();
+            UseItem(healName);
+
+            //Use Item Shield Pack without pack
+            Reset();
+            ShowHud();
+            UseItem(shieldName);
+            ShowHud();
+
+            //use item shield pack with pack
+            Reset();
+            shieldCount++;
+            ShowHud();
+            TakeDMG(150);
+            ShowHud();
+            UseItem(shieldName);
         }
 
         static void GenEnemy()
@@ -1165,16 +1226,24 @@ namespace HealthSystem
 
         static void DealDMG(int DMG)
         {
-            if (eIsBlocking == true)
+            if(DMG >= 0)
             {
-                DMG = DMG / 2;
+                if (eIsBlocking == true)
+                {
+                    DMG = DMG / 2;
+                }
+                Console.WriteLine(eName + " is taking " + DMG.ToString() + " damage");
+                eHealth -= DMG;
+                if (eHealth < 0)
+                {
+                    eHealth = 0;
+                }
             }
-            Console.WriteLine(eName + " is taking " + DMG.ToString() + " damage");
-            eHealth -= DMG;
-            if (eHealth < 0)
+            else
             {
-                eHealth = 0;
+                Console.WriteLine("Error: can't deal negative dmg");
             }
+            
             SetEDifs();
         }
 
@@ -1202,6 +1271,7 @@ namespace HealthSystem
                     if(shieldCount > 0)
                     {
                         RegenShield(shieldPower);
+                        shieldCount--;
                         if(shieldCount < 0)
                         {
                             shieldCount = 0;
