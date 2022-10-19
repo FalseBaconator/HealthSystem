@@ -1152,7 +1152,9 @@ namespace HealthSystem
                     DrawEnemy(enemy);                                                   //  //  //
                     ShowHud();                                                          //  //  //
                     break;                                                              //  //  //
-                case "run":                                                             //          //Run TODO
+                case "run":                                                             //          //Run
+                    GenEnemy();                                                         //          //Generates a new enemy
+
                     break;                                                              //          //
                 default:                                                                //  //
                     Console.WriteLine("Error: invalid command");                        //  //Error Check
@@ -1393,7 +1395,7 @@ namespace HealthSystem
         {
             Console.WriteLine("You Win!");
             Console.ReadKey(true);
-            return;
+            Environment.Exit(0);
         }
     }
 }
