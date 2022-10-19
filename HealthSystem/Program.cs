@@ -131,10 +131,13 @@ namespace HealthSystem
         //Game
         static int enemyCount;
 
+
+
         //Methods
 
         static void Main(string[] args)
         {
+            Console.SetWindowSize(100, 50);
             Console.WriteLine("Do you want to do a 'Unit Test' or 'Play' the game?");
             playerInput = Console.ReadLine();
             switch (playerInput)
