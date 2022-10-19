@@ -116,13 +116,13 @@ namespace HealthSystem
         //Items
         const int maxItems = 99;
         //heal
-        const string healName = "Health Pack";
+        const string healName = "health pack";
         static int healCount;
         static int prevHealCount;
         static int difHealCount;
         static int healPower = 50;
         //shield
-        const string shieldName = "Shield Pack";
+        const string shieldName = "shield pack";
         static int shieldCount;
         static int prevShieldCount;
         static int difShieldCount;
@@ -138,16 +138,16 @@ namespace HealthSystem
         static void Main(string[] args)
         {
             Console.SetWindowSize(100, 50);
-            Console.WriteLine("Do you want to do a 'Unit Test' or 'Play' the game?");
-            playerInput = Console.ReadLine();
+            Console.WriteLine("Do you want to do a 'unit test' or 'play' the game?");
+            playerInput = Console.ReadLine().ToLower();
             switch (playerInput)
             {
-                case "Unit Test":
+                case "unit test":
                     Console.WriteLine("Beginning Unit Tests");
                     Console.ReadKey(true);
                     UnitTest();
                     break;
-                case "Play":
+                case "play":
                     Console.WriteLine("How many enemies do you want to fight?");
                     enemyCount = int.Parse(Console.ReadLine());
                     Console.WriteLine("Beginning Game");
@@ -1120,7 +1120,7 @@ namespace HealthSystem
         static void GetBattleInput()
         {
             Console.WriteLine("Do you want to 'attack', 'reload', 'use item' or 'run'?");
-            playerInput = Console.ReadLine();
+            playerInput = Console.ReadLine().ToLower();
             switch (playerInput)
             {
                 case "attack":
@@ -1145,7 +1145,7 @@ namespace HealthSystem
                     break;
                 case "use item":
                     Console.WriteLine("Which item? " + healName + " or " + shieldName);
-                    UseItem(Console.ReadLine());
+                    UseItem(Console.ReadLine().ToLower());
 
                     Console.ReadKey(true);
                     Console.Clear();
@@ -1200,14 +1200,14 @@ namespace HealthSystem
 
         static void GetLootInput(string ItemName)
         {
-            Console.WriteLine("You see a " + ItemName + ". What do you do? 'Pick Up' or 'Ignore'?");
-            playerInput = Console.ReadLine();
+            Console.WriteLine("You see a " + ItemName + ". What do you do? 'pick up' or 'ignore'?");
+            playerInput = Console.ReadLine().ToLower();
             switch (playerInput)
             {
-                case "Pick Up":
+                case "pick up":
                     PickUp(ItemName);
                     break;
-                case "Ignore":
+                case "ignore":
                     Console.WriteLine("You decided to ignore it for some reason.");
                     break;
                 default:
