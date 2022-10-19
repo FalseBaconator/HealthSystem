@@ -131,7 +131,7 @@ namespace HealthSystem
 
         //Game
         static int enemyCount;
-        const int maxEnemyCount = 10;
+        //const int maxEnemyCount = 10;
 
         //Methods
 
@@ -147,9 +147,10 @@ namespace HealthSystem
                     UnitTest();
                     break;
                 case "Play":
+                    Console.WriteLine("How many enemies do you want to fight?");
+                    enemyCount = int.Parse(Console.ReadLine());
                     Console.WriteLine("Beginning Game");
                     Console.ReadKey(true);
-                    enemyCount = maxEnemyCount;
                     Reset();
                     Console.Clear();
                     GenEnemy();
@@ -1175,7 +1176,7 @@ namespace HealthSystem
         static void LootDrop()
         {
             Random rand = new Random();
-            int ItemFinder = rand.Next(0, 7);
+            int ItemFinder = rand.Next(0, 8);
             switch (ItemFinder)
             {
                 case 0:
@@ -1198,6 +1199,10 @@ namespace HealthSystem
                     break;
                 case 6:
                     GetLootInput(shieldName);
+                    break;
+                case 7:
+                    Console.WriteLine("You see a One Up and gain a life.");
+                    OneUp(1);
                     break;
                 default:
                     Console.WriteLine("Error: Invalid Item");
