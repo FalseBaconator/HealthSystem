@@ -177,6 +177,9 @@ namespace HealthSystem
             weaponDMG = defaultDMG;
             ammo = defaultAmmo;
             maxAmmo = defaultMaxAmmo;
+
+            eHealth = eMaxHealth;
+
             DetermineStatus();
 
             //make sure that no difference is displayed in ShowHud;
