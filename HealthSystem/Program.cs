@@ -137,7 +137,6 @@ namespace HealthSystem
 
         static void Main(string[] args)
         {
-            Console.SetWindowSize(100, 50);
             Console.WriteLine("Do you want to do a 'unit test' or 'play' the game?");
             playerInput = Console.ReadLine().ToLower();
             switch (playerInput)
